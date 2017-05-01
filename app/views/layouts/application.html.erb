@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <title>The cafeteria</title>
+    <meta charset="utf-8">
+    <meta name="author" content="pixelhint.com">
+    <meta name="description" content="Resto HTML5/CSS3 Restaurant Home Page website Template" />
+
+
+    <link rel="stylesheet" type="text/css" href="/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script type="text/javascript" src="/javascripts/carouFredSel.js"></script>
+    <script type="text/javascript" src="/javascripts/easing.js"></script>
+    <script type="text/javascript" src="/javascripts/main.js"></script>
+
+
+    <title>Cafeteria</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+        <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+            <%= csrf_meta_tags %>
+
+
+
+                <header>
+                    <div class="wrapper">
+                        <div class="logo">
+                            <a href=""><img src="/img/logo2.png" alt="Re" title="" style="margin-top:-46%" /></a>
+                        </div>
+
+                        <nav>
+                            <ul>
+                                <!--<li><a href="" class="active">Home</a></li>-->
+                                <% if user_signed_in? %>
+                                    <li><a href="/#mainmenu">Menu</a></li>
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="">My Orders</a></li>
+                                    <li><a href="/users/edit">profile</a></li>
+                                    <li>
+                                        <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+                                    </li>
+
+                                    <%else%>
+                                        <li><a href="/users/sign_in">sign in</a></li>
+                                        <li><a href="/users/sign_up">sign up</a></li>
+                                        <%end%>
+                            </ul>
+                        </nav>
+
+                    </div>
+
+                </header>
+
+
+</head>
+<hr/>
+
+<body>
+
+
+    <% if alert %>
+        <p class="alert alert-danger">
+            <%= alert %>
+        </p>
+        <% end %>
+            <%= yield %>

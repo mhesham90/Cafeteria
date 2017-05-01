@@ -1,0 +1,48 @@
+<div class="col-md-4">
+
+</div>
+<div class="col-md-4 panel panel-default">
+    <div class="panel-body">
+
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name) , html: {class: "form-horizontal center" }) do |f| %>
+            <%= devise_error_messages! %>
+
+
+
+                <div class="field">
+                    <%= f.label :first_name %><br/>
+                        <%= f.text_field :first_name, autofocus: true ,class: "form-control"  %>
+                </div>
+                <div class="field">
+                    <%= f.label :Last_name %><br />
+                        <%= f.text_field :last_name ,class: "form-control"  %>
+                </div>
+
+                <div class="field">
+                    <%= f.label :email %><br />
+                        <%= f.email_field :email ,class: "form-control" %>
+                </div>
+
+                <div class="field">
+                    <%= f.label :password %>
+                        <% if @minimum_password_length %>
+                            <em>(<%= @minimum_password_length %> characters minimum)</em>
+                            <% end %><br />
+                                <%= f.password_field :password, autocomplete: "off" ,class: "form-control"  %>
+                </div>
+
+                <div class="field">
+                    <%= f.label :password_confirmation %><br />
+                        <%= f.password_field :password_confirmation, autocomplete: "off" ,class: "form-control"  %>
+                </div>
+
+                <div class="actions">
+                    </br>
+                    <%= f.submit "Sign up" ,class: "btn btn-default" ,style: "width:80%"  %>
+                </div>
+                <% end %>
+
+                    <%= render "devise/shared/links" %>
+    </div>
+    <div class="col-md-4 "></div>

@@ -5,6 +5,9 @@
 <table>
   <thead>
     <tr>
+      <th>Notes</th>
+      <th>Status</th>
+      <th>Time</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -12,6 +15,9 @@
   <tbody>
     <% @orders.each do |order| %>
       <tr>
+        <td><%= order.notes %></td>
+        <td><%= order.status %></td>
+        <td><%= order.time %></td>
         <td><%= link_to 'Show', order %></td>
         <td><%= link_to 'Edit', edit_order_path(order) %></td>
         <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>

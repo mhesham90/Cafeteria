@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :orders
+  resources :categories
+  resources :rooms
   get 'users/show'
 
 devise_for :users, :controllers => { :registrations => 'users/registrations' }

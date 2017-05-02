@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Orderdetails</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orderdetails.each do |orderdetail| %>
+      <tr>
+        <td><%= link_to 'Show', orderdetail %></td>
+        <td><%= link_to 'Edit', edit_orderdetail_path(orderdetail) %></td>
+        <td><%= link_to 'Destroy', orderdetail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Orderdetail', new_orderdetail_path %>

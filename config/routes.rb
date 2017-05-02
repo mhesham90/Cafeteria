@@ -2,11 +2,14 @@ Rails.application.routes.draw do
 
   get 'users/show'
 
-  
-
 devise_for :users, :controllers => { :registrations => 'users/registrations' }
     
  resources :users 
+ resources :products 
+ resources :orders
+ resources :rooms
+ resources :categories
+ 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

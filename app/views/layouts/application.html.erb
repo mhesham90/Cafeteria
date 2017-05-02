@@ -24,7 +24,10 @@
         <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
             <%= csrf_meta_tags %>
 
+</head>
+<hr/>
 
+<body>
 
                 <header>
                     <div class="wrapper">
@@ -36,9 +39,10 @@
                             <ul>
                                 <!--<li><a href="" class="active">Home</a></li>-->
                                 <% if user_signed_in? %>
+                                    
                                     <li><a href="/#mainmenu">Menu</a></li>
                                     <li><a href="/">Home</a></li>
-                                    <li><a href="">My Orders</a></li>
+                                    <li><a href="/orders">My Orders</a></li>
                                     <li><a href="/users/edit">profile</a></li>
                                     <li>
                                         <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
@@ -56,10 +60,7 @@
                 </header>
 
 
-</head>
-<hr/>
 
-<body>
 
 
     <% if alert %>
@@ -67,4 +68,49 @@
             <%= alert %>
         </p>
         <% end %>
-            <%= yield %>
+            <div class="container">
+                <%= yield %>
+            </div>
+            <!--  start footer  -->
+            <footer>
+                <div class="wrapper">
+                    <!-- adresse1  -->
+                    <section class="adress">
+                        <p>Address</p>
+                        <hr/>
+                        <p>Smart Village</p>
+                        <p class="location">ITI<br/> </p>
+                        <p class="phone">0123456789</p>
+                    </section>
+
+                    <!--  adress2  -->
+
+
+                    <!--  footer navigation  -->
+                    <section class="footer_nav">
+                        <nav>
+                            <ul>
+                                <br/>
+                                <li><a href="">Contact</a></li>
+                                <hr/>
+                                <li>
+                                    <a class="address phone">0123456789</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </section>
+
+                    <!--  footer copyrights  -->
+                    <section class="copyrights">
+
+                        <p>© All Rights Reserved 2017.</p>
+
+                    </section>
+                </div>
+            </footer>
+            <!--  end footer  -->
+            <script src='../ga.js'></script>
+
+</body>
+
+</html>

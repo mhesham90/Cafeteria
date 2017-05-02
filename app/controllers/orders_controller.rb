@@ -5,6 +5,12 @@ class OrdersController < ApplicationController
   # GET /orders.json
   def index
     @orders = Order.all
+
+    # if current_user.admin == 0 
+    #   render checks 
+    # else 
+    #   render list order
+
   end
 
   # GET /orders/1
@@ -14,7 +20,14 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @order = Order.new
+      @products = Product.all
+      @categories = Category.all
+      current_user.orders.last
+      @order = Order.new
+      # if current_user.admin == 0 
+      #   show user dropdown list
+      
+
   end
 
   # GET /orders/1/edit
@@ -25,6 +38,11 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = Order.new(order_params)
+
+      # if current_user.admin == 0 
+      #   get user from request
+      #  else 
+      #   get user from session
 
     respond_to do |format|
       if @order.save

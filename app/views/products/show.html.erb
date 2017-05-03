@@ -1,38 +1,63 @@
-
-
 <div class="col-md-6">
   <div class="panel panel-default">
     <div class="panel-body">
-<p id="notice"><%= notice %></p>
+      <p id="notice"><%= notice %></p>
       <div style="text-align: center">
         <h3>Product's Details</h3>
-      <hr/></div>
-<p>
-  <strong>Name:</strong>
-  <%= @product.name %>
-</p>
+        <hr/>
+      </div>
 
-<p>
-  <strong>Image:</strong>
-  <%= @product.image %>
-</p>
 
-<p>
-  <strong>Category:</strong>
-  <%= @product.category.name %>
-</p>
 
-<p>
-  <strong>Status:</strong>
-  <% if @product.status==1 %>
-      Available
-      <% else %>
-           Unavailable
-      <%end%>
-</p>
+
+      <table class="table table-hover">
+
+
+        <tbody>
+
+        <tr>
+          <td>  <strong>Name:</strong> </td>
+          <td>  <%= @product.name %></td>
+        </tr>
+
+
+
+        <tr>
+          <td>  <strong>Category:</strong></td>
+          <td>       <%= @product.category.name %></td>
+        </tr>
+
+
+
+      <tr>
+        <td><strong>Status:</strong></td>
+        <% if @product.status==1 %>
+            <td>  Available</td>
+        <% else %>
+            <td> Unavailable</td>
+        <% end %>
+      </tr>
+
+
+      </p>
+
+
+
+         <tr>
+           <td> <B>products image :</B> </td>
+           <% if @product.avatar.exists? %>
+           <td><%= image_tag @product.avatar.url, class: "img-thumbnail", style: "width:150px" %></td>
+<%else%>    <td>No image available</td>
+          </p>
+         </tr>
+      <% end %>
+
+        </tbody>
+      </table>
       <div style="text-align: right">
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+
+        <%= link_to 'Edit', edit_product_path(@product) %> |
+        <%= link_to 'Back', products_path %>
       </div>
     </div>
   </div>

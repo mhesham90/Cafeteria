@@ -4,7 +4,7 @@
 
     <h1>Edit Customer</h1>
     <hr/>
-    <%= form_for :user, :html => {:class => "form-horizontal center"} ,url: user_path(@user), method: :patch do |f|%>
+    <%= form_for :user, :html => {:class => "form-horizontal center",multipart: true} ,url: user_path(@user), method: :patch do |f|%>
 
 
             <%= f.label :First_name  , class: "control-label"%>
@@ -20,12 +20,17 @@
             <%= f.text_field :email ,class: "form-control" ,style:"width:100%"%>
 
 
-
+        <hr/>
 
         <%= f.label :admin  , class: "control-label"%>
-        <%= f.check_box :admin ,class: "checkbox-inline form-control" ,style:"width:50%"%><br/>
+        <%= f.check_box :admin ,class: "checkbox-inline form-control" ,style:"width:50%"%><hr/>
+        <% if @user.avatar.exists?%>
+        <%= image_tag @user.avatar.url , class:"img-thumbnail" ,style:"width:150px" %>
+        <%end%>
+            <div>
         <%= f.label :image  , class: "control-label"%>
-        <%= f.file_field :image ,class: "form-control" %>
+        <%= f.file_field :avatar ,class: "form-control" %>
+        </div>
         <%= f.label :Room , class: "control-label"%>
         <%= f.collection_select :room_id, Room.all, :id, :name, {prompt: "Select Room"}, {class: "form-control"} %>
 <br/>

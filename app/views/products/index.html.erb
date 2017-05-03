@@ -21,7 +21,11 @@
     <% @products.each do |product| %>
       <tr>
         <td><%= product.name %></td>
-        <td><%= product.image %></td>
+        <td> <% if product.avatar.exists?%>
+              <%= image_tag product.avatar.url , class:"img-thumbnail" ,style:"width:50px" %>
+              <%else%>
+          no image available
+          <%end%></td>
         <td><%= product.category.name %></td>
         <% if product.status==1 %>
         <td> Available</td>

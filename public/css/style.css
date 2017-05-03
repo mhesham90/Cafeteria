@@ -594,7 +594,7 @@ aside img {
     /* margin:  100px auto;
 	 */
     text-align: center;
-    /*        width:  892px; /* total computed width = 222 x 3 + 226 */
+    /*        width:  892px; !* total computed width = 222 x 3 + 226 */
 }
 
 #pricing-table .plan {
@@ -805,7 +805,7 @@ textarea:focus {
 /**
  * Remake of "HTML + CSS3 Icons" by Clay Cauley
  *
- * Inspiration was taken from: 
+ * Inspiration was taken from:
  * -http://designmoo.com/5368/html-css3-icons/
  */
 
@@ -940,7 +940,7 @@ a.flickr:active {
 }
 
 .icons {
-    background: url(../images/social.png) no-repeat;
+
     bottom: 5px;
     display: block;
     height: 26px;

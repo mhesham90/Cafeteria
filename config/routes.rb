@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :rooms
   get 'users/show'
 
-devise_for :users, :controllers => { :registrations => 'users/registrations' }
+devise_for :user, :controllers => { :registrations => 'users/registrations' }
     
  resources :users 
  resources :products 

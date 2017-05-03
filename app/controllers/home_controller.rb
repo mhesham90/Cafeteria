@@ -3,7 +3,7 @@ class HomeController < ApplicationController
         
       @products = Product.all
       @categories = Category.all
-      current_user.orders.last
+      @latestorders=current_user.orders.last
 
   end
 end

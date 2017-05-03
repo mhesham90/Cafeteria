@@ -40,7 +40,7 @@
  def user_data
       @user = User.find(params[:id])
       
-    
+   
  end
      
  end

@@ -38,7 +38,7 @@
     params.require(:user).permit(:first_name, :email, :password,:last_name, :room_id, :admin,:image,:ext,:avatar)
   end
  def user_data
-      @user = User.find(params[:id])
+      @user = @current_user.find(params[:id])
       
     
  end

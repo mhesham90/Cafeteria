@@ -1,9 +1,18 @@
+
+<div class="col-md-1"></div>
+<div class="col-md-5">
+  <div class="panel panel-default">
+    <div class="panel-body">
 <p id="notice"><%= notice %></p>
 
 <p>
   <strong>Name:</strong>
   <%= @category.name %>
 </p>
-
+<div style="text-align: right">
 <%= link_to 'Edit', edit_category_path(@category) %> |
 <%= link_to 'Back', categories_path %>
+</div>
+    </div>
+  </div>
+</div>

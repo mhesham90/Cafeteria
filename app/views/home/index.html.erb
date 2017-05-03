@@ -47,55 +47,37 @@
     <div class="menu_title" id="mainmenu">
       <h2>The Menu</h2>
       <ul class="nav nav-tabs">
-
-        <li class="active"><a data-toggle="tab" href="#drinks" style="color:black">Drinks</a></li>
-        <li><a data-toggle="tab" href="#meals" style="color:black">Meals</a></li>
-        <li><a data-toggle="tab" href="#dessert" style="color:black">Desserts</a></li>
+        <% @categories.each_with_index do |cat,index| %>
+        <li class="<%= 'active' if index==0%>"><a data-toggle="tab" href=#<%= cat.name%> style="color:black"> <%=cat.name%></a></li>
+                                    <%end%>
 
       </ul>
     </div>
     <div class="tab-content">
-      <div id="drinks" class="tab-pane fade in active">
+      <% @categories.each_with_index do |cat,index| %>
+      <div id="<%= cat.name%>" class="tab-pane fade in <%= 'active' if index==0%>">
         <div class="mean_menu">
           <!--  left menu row  -->
 
 
           <article class="lmenu">
             <ul>
+              <% @products.each_with_index do |product,index| %>
+                  <%if product.category.id== cat.id  and index %2==0%>
               <li>
+
                 <div class="item_info">
-                  <h3 class="item_name">Tea</h3>
+
+                  <h3 class="item_name"><%=product.name %> </h3>
 
                 </div>
-                <h4 class="price">5 LE</h4>
+                <h4 class="price"><%=product.price%> LE</h4>
                 <span class="separator"></span>
               </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Green tea</h3>
+                               <%end%>
+                               <%end%>
 
-                </div>
-                <h4 class="price">5 LE</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Turkish coffee</h3>
 
-                </div>
-                <h4 class="price">4 LE</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Nescafe</h3>
-
-                </div>
-
-                <h4 class="price">6 LE </h4>
-
-                <span class="separator"></span>
-              </li>
 
             </ul>
           </article>
@@ -103,454 +85,34 @@
           <!--  right menu row  -->
           <article class="rmenu">
             <ul>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Orange juice.</h3>
+              <% @products.each_with_index do |product,index| %>
+                  <%if product.category.name== cat.name  and index %2 != 0%>
+                      <li>
 
-                </div>
-                <h4 class="price">8 LE</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Lemon-mint</h3>
+                        <div class="item_info">
 
-                </div>
-                <h4 class="price">13 LE</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Strawberry.</h3>
+                          <h3 class="item_name"><%=product.name %> </h3>
 
-                </div>
-                <h4 class="price">9 LE</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Cocktail</h3>
-
-                </div>
-                <h4 class="price">15 LE</h4>
-                <span class="separator"></span>
-              </li>
+                        </div>
+                        <h4 class="price"><%=product.price%> LE</h4>
+                        <span class="separator"></span>
+                      </li>
+<%end%>
+                      <%end%>
             </ul>
           </article>
         </div>
 
         <!--  hidden menu items  -->
-        <div class="hidden_items">
-          <!--  left menu row  -->
-          <article class="lmenu">
-            <ul>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-            </ul>
-          </article>
 
-          <!--  right menu row  -->
-          <article class="rmenu">
-            <ul>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-            </ul>
-          </article>
-        </div>
 
       </div>
 
+      <%end%>
+</div>
 
-      <!--meals menu -->
-      <div id="meals" class="tab-pane fade">
-        <div class="mean_menu">
-          <!--  left menu row  -->
-          meals
-
-          <article class="lmenu">
-            <ul>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Metus varius laoreet.</h3>
-                  <p class="item_desc">Chicken, mozzarella cheese, onions.</p>
-                </div>
-                <h4 class="price">$62</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Donec sodales magna.</h3>
-                  <p class="item_desc">Tuna, Sweetcorn, Cheese.</p>
-                </div>
-                <h4 class="price">$25</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Saugue velit cursus.</h3>
-                  <p class="item_desc">Pineapple, Minced Beef, Cheese.</p>
-                </div>
-                <h4 class="price">$30</h4>
-                <span class="separator"></span>
-              </li>
-            </ul>
-          </article>
-
-          <!--  right menu row  -->
-          <article class="rmenu">
-            <ul>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Arcu pede enim justo.</h3>
-                  <p class="item_desc">Tuna, Sweetcorn, Cheese.</p>
-                </div>
-                <h4 class="price">$45</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Cras dapibussemper nisi.</h3>
-                  <p class="item_desc">Pineapple, Minced Beef, Cheese.</p>
-                </div>
-                <h4 class="price">$32</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Quam semper libero.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$15</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Nam eget dui Etiam.</h3>
-                  <p class="item_desc">Chicken, mozzarella cheese, onions.</p>
-                </div>
-                <h4 class="price">$35</h4>
-                <span class="separator"></span>
-              </li>
-            </ul>
-          </article>
-        </div>
-
-        <!--  hidden menu items  -->
-        <div class="hidden_items">
-          <!--  left menu row  -->
-          <article class="lmenu">
-            <ul>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-            </ul>
-          </article>
-
-          <!--  right menu row  -->
-          <article class="rmenu">
-            <ul>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-            </ul>
-          </article>
-        </div>
-
-      </div>
-      <!--end meal menu-->
-      <!--dessert menu-->
-      <div id="dessert" class="tab-pane fade ">
-        <div class="mean_menu">
-          <!--  left menu row  -->
-          desserts
-
-          <article class="lmenu">
-            <ul>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Metus varius laoreet.</h3>
-                  <p class="item_desc">Chicken, mozzarella cheese, onions.</p>
-                </div>
-                <h4 class="price">$62</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Donec sodales magna.</h3>
-                  <p class="item_desc">Tuna, Sweetcorn, Cheese.</p>
-                </div>
-                <h4 class="price">$25</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Saugue velit cursus.</h3>
-                  <p class="item_desc">Pineapple, Minced Beef, Cheese.</p>
-                </div>
-                <h4 class="price">$30</h4>
-                <span class="separator"></span>
-              </li>
-            </ul>
-          </article>
-
-          <!--  right menu row  -->
-          <article class="rmenu">
-            <ul>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Arcu pede enim justo.</h3>
-                  <p class="item_desc">Tuna, Sweetcorn, Cheese.</p>
-                </div>
-                <h4 class="price">$45</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Cras dapibussemper nisi.</h3>
-                  <p class="item_desc">Pineapple, Minced Beef, Cheese.</p>
-                </div>
-                <h4 class="price">$32</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Quam semper libero.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$15</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Nam eget dui Etiam.</h3>
-                  <p class="item_desc">Chicken, mozzarella cheese, onions.</p>
-                </div>
-                <h4 class="price">$35</h4>
-                <span class="separator"></span>
-              </li>
-            </ul>
-          </article>
-        </div>
-
-        <!--  hidden menu items  -->
-        <div class="hidden_items">
-          <!--  left menu row  -->
-          <article class="lmenu">
-            <ul>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-            </ul>
-          </article>
-
-          <!--  right menu row  -->
-          <article class="rmenu">
-            <ul>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-              <li>
-                <div class="item_info">
-                  <h3 class="item_name">Voluptate cillum fugiat.</h3>
-                  <p class="item_desc">Cheese, tomato, mushrooms, onions.</p>
-                </div>
-                <h4 class="price">$50</h4>
-                <span class="separator"></span>
-              </li>
-            </ul>
-          </article>
-        </div>
-
-      </div>
-      <!--end dessert menu-->
-
-
-    </div>
   </div>
+
 </section>
 <!--  end menu  -->
 </div>

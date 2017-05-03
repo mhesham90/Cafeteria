@@ -1,4 +1,5 @@
-<%= form_for(product) do |f| %>
+
+<%= form_for(product ,:html => {:class => "form-horizontal center"} )  do |f| %>
   <% if product.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
@@ -12,26 +13,35 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.label :name  , class: "control-label"%>
+    <%= f.text_field :name  ,class: "form-control" , style:"width:100%"%>
   </div>
+    <div class="field">
+      <%= f.label :price , class: "control-label"%>
+      <%= f.text_field :price  ,class: "form-control  ",style:"width:100%"%>
+    </div>
 
   <div class="field">
-    <%= f.label :image %>
-    <%= f.text_field :image %>
+    <%= f.label :image  , class: "control-label " %>
+    <%= f.file_field :image ,class:"btn-file"  %>
   </div>
 
-  <div class="field">
-    <%= f.label :category_id %>
-    <%= f.text_field :category_id %>
+  <div class="field" >
+    <%= f.label :category_id   , class: "control-label"%>
+    <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Select a category"}, {class: "form-control"} %>
   </div>
 
+
+
+
+
+
   <div class="field">
-    <%= f.label :status %>
-    <%= f.check_box :status %>
+    <%= f.label :Available  , class: "control-label" %>
+    <%= f.check_box :status  ,class: "form-check-input"%>
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-default" %>
   </div>
 <% end %>

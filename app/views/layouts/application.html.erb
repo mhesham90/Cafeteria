@@ -25,7 +25,7 @@
             <%= csrf_meta_tags %>
 
 </head>
-<hr/>
+
 
 <body>
 
@@ -36,14 +36,54 @@
                         </div>
 
                         <nav>
+
                             <ul>
-                                <!--<li><a href="" class="active">Home</a></li>-->
+                                <!--<li><a href="" class="active">r</a></li>-->
                                 <% if user_signed_in? %>
-                                    
-                                    <li><a href="/#mainmenu">Menu</a></li>
+
+
                                     <li><a href="/">Home</a></li>
-                                    <li><a href="/orders">My Orders</a></li>
-                                    <li><a href="/users/edit">profile</a></li>
+                                  <li><a href="/#mainmenu">Menu</a></li>
+
+                                    <li><a href="/">My Orders</a></li>
+                                  <li><a href="/users/edit">Edit profile</a></li>
+
+                              <!--if admin-->
+<%if  current_user.try(:admin?) %>
+                                       <li class="dropdown">
+
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">products
+                                      <span class="caret"></span></a>
+
+
+                                    <ul class="dropdown-menu" >
+                                      <li  ><a href="/products/new">Add New product</a></li>
+                                      <li  ><a href="/products">Edit all products</a></li>
+
+                                    </ul>
+
+                                  </li>
+                                  <li class="dropdown">
+
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Customers
+                                      <span class="caret"></span></a>
+
+
+                                    <ul class="dropdown-menu" >
+                                      <li  ><a href="/users/new">Add New Customer</a></li>
+                                      <li  ><a href="/users">Edit all Customer</a></li>
+
+                                    </ul>
+
+                                  </li>
+                                      <li><a href="/categories">Categories</a></li>
+
+<%end%>
+                                  <!--end if admin-->
+
+
+
+
                                     <li>
                                         <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
                                     </li>
@@ -53,6 +93,7 @@
                                         <li><a href="/users/sign_up">sign up</a></li>
                                         <%end%>
                             </ul>
+
                         </nav>
 
                     </div>
@@ -68,9 +109,9 @@
             <%= alert %>
         </p>
         <% end %>
-            <div class="container">
+
                 <%= yield %>
-            </div>
+
             <!--  start footer  -->
             <footer>
                 <div class="wrapper">

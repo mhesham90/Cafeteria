@@ -1,5 +1,12 @@
-<p id="notice"><%= notice %></p>
 
+
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-body">
+<p id="notice"><%= notice %></p>
+      <div style="text-align: center">
+        <h3>Product's Details</h3>
+      <hr/></div>
 <p>
   <strong>Name:</strong>
   <%= @product.name %>
@@ -12,7 +19,7 @@
 
 <p>
   <strong>Category:</strong>
-  <%= @product.category %>
+  <%= @product.category.name %>
 </p>
 
 <p>
@@ -22,3 +29,6 @@
 
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>
+    </div>
+  </div>
+</div>

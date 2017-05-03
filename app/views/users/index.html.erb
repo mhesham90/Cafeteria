@@ -1,0 +1,15 @@
+<div class="col-md-4">
+</div>
+<div class="col-md-4">
+  <h1>
+    users</h1>
+  <% @users.each do |user|%>
+      <p>
+        <%= user.first_name%>
+      </p>
+      <%= link_to 'show', user_path(user)%>
+      <%= link_to 'Edit', edit_user_path(user) %>
+      <%= link_to 'delete', user_path(user) , method: :delete, data: {confirm: "are you sure?"} %>
+  <% end %>
+</div>
+<div class="col-md-4"></div>

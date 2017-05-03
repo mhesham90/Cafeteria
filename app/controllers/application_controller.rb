@@ -5,3 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
 end
+private
+def admin?
+  @current_user = User.find_by_id(session[:current_user_id])
+  @current_user.admin == '1'
+end

@@ -1,8 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Products</h1>
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-body">
+<div style="text-align: center">
+  <h3>Products</h3></div>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Name</th>
@@ -18,7 +22,7 @@
       <tr>
         <td><%= product.name %></td>
         <td><%= product.image %></td>
-        <td><%= product.category %></td>
+        <td><%= product.category.name %></td>
         <td><%= product.status %></td>
         <td><%= link_to 'Show', product %></td>
         <td><%= link_to 'Edit', edit_product_path(product) %></td>
@@ -30,4 +34,8 @@
 
 <br>
 
-<%= link_to 'New Product', new_product_path %>
+<%= link_to 'New Product', new_product_path ,class:"btn btn-info",style:"color:white"%>
+</div>
+<div class="col-md-1"></div>
+  </div>
+</div>

@@ -143,7 +143,7 @@ margin: 0;
 	-moz-border-radius: 5px;
 	border-radius:5px;
 }
-/* If using user thumbnails there's a pause well the new large image loads. This is the loader for that */		
+/* If using user thumbnails there's a pause well the new large image loads. This is the loader for that */
 .pika-loader {
 	background:url(../images/loading.gif) 3px 3px no-repeat #000;
 	background-color:rgba(0,0,0,0.9);

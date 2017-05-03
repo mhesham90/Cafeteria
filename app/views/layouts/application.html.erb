@@ -49,7 +49,8 @@
                                   <li><a href="/users/edit">Edit profile</a></li>
 
                               <!--if admin-->
-<%if  current_user.try(:admin?) %>
+
+                                      <% if current_user.admin=='1'%>
                                        <li class="dropdown">
 
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">products

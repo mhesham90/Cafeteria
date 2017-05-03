@@ -21,7 +21,11 @@
             <td ><%= user.first_name%></td>
             <td ><%= user.last_name%></td>
             <td ><%= user.email%></td>
-            <td ><%= user.admin%></td>
+            <% if user.admin=='1' %>
+                <td >Admin</td>
+            <% else %>
+                <td >regular user</td>
+            <%end%>
 
             <td > <%= link_to 'Edit', edit_user_path(user) %></td>
             <td > <%= link_to 'delete', user_path(user) , method: :delete, data: {confirm: "are you sure?"} %></td>

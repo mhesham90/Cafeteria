@@ -24,7 +24,11 @@
 
 <p>
   <strong>Status:</strong>
-  <%= @product.status %>
+  <% if @product.status==1 %>
+      Available
+      <% else %>
+           Unavailable
+      <%end%>
 </p>
       <div style="text-align: right">
 <%= link_to 'Edit', edit_product_path(@product) %> |

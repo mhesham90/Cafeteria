@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
 end
 private
 def admin?
-  @current_user = User.find_by_id(session[:current_user_id])
-  @current_user.admin == '1'
+  # @current_user = User.find_by_id(session[:current_user_id])
+  # @current_user.admin == '1'
 end

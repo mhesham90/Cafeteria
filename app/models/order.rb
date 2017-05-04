@@ -3,6 +3,14 @@ class Order < ApplicationRecord
   has_many :orderdetails
   has_many :products, through: :orderdetails
 
-  before_destroy ->{ OrderRelayJob.perform_later(self)}
-  after_commit ->{ OrderRelayJob.perform_later(self)}
+  after_create ->{
+    OrderCreateJob.perform_now(self)
+  }
+  after_update_commit ->{
+    if self.status == 3
+      OrderChangeJob.perform_now(self)
+    else
+      OrderRelayJob.perform_now(self, self.user_id)
+    end
+  }
 end

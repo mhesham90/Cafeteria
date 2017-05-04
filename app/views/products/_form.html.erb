@@ -20,7 +20,7 @@
       <%= f.label :price , class: "control-label"%>
       <%= f.number_field :price  ,class: "form-control  ",style:"width:100%"%>
     </div>
-    <% if @product.avatar.exists?%>
+    <% if @product.avatar.present?%>
     <%= image_tag @product.avatar.url , class:"img-thumbnail" ,style:"width:150px" %>
 <%end%>
   <div class="field">

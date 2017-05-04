@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
-    # render orders for admin 
+    # render orders for admin
   end
 
   # POST /orders

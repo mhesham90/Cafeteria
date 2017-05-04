@@ -22,6 +22,8 @@ class OrdersController < ApplicationController
   def new
       @products = Product.all
       @categories = Category.all
+      puts ("products")
+      puts @categories.first.products.size
       current_user.orders.last
       @order = Order.new
       # if current_user.admin == 0 

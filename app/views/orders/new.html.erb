@@ -1,27 +1,115 @@
 <div class="col-md-12">
-<div class="col-md-1"></div>
-<div class="col-md-3">
-  <div class="panel panel-default">
-    <div class="panel-body">
-<h1>New Order</h1>
 
-<%= render 'form', order: @order %>
+    <div class="col-md-1"></div>
 
-<%= link_to 'Back', orders_path %>
+    <div class="col-md-10">
 
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div id="order" class="panel-body">
+                        </div>
+                            <hr/>
+                        <div>
+                            notes:<input type="text">
+                            <br>
+                            <input type="button" value="check out">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h1>New Order</h1>
+                            <% @categories.each do |category| %>
+                                <%= category.name %>
+                                    <% category.products.each do |product| %>
+                                        <%=product.name%>
+                                            <% end %>
+                                                <% end %>
+
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul class="nav nav-tabs">
+
+                                <% @categories.each do |category| %>
+
+
+                                    <li>
+                                        <a data-toggle="tab" href="cat-<%=category.id%>">
+                                            <%=category.name%>
+                                        </a>
+                                    </li>
+
+                                    <% end %>
+                            </ul>
+
+                            <div class="tab-content">
+
+                                <% @categories.each do |category| %>
+
+                                    <div id='cat-<%=category.id%>' class="tab-pane fade in ">
+                                        <% category.products.each do |product| %>
+                                            <%=product.name%>
+                                                <% end %>
+                                                <br/>
+                                    </div>
+
+                                    <% end %>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-<div class="col-md-7">
-  <div class="panel panel-default">
-    <div class="panel-body">
-<h1>New Order</h1>
-    <% @categories.each do |category| %>
-        <%= category.name %>
-    <% end %>
 
-    </div>
-  </div>
-</div>
-<div class="col-md-1"></div>
-</div>
+    Tea 
+    <input type="number" onchange="textChange(i)" >
+    <button onclick="increment(i)">+</button>
+    <button onclick="decrement(i)">-</button>
+    EGP 3 
+    <button onclick="remove(i)" >x</button>
+
+
+<script>
+    var  products =<%= @products.to_json.html_safe %>
+    alert(products)
+
+    var model = {};
+
+    var order_div = document.getElementById("order");
+    var order_products = products; 
+    for(var i=0 ; i < order_products.length ; i++){
+        var product_name = document.createTextNode(order_products[i].name);
+        var product_price = document.createTextNode(" EGP "+order_products[i].price+" ");
+        var product_quantity = document.createElement("input");
+        var product_add = document.createElement("BUTTON");
+        var add_text = document.createTextNode("+");
+        product_add.appendChild(add_text);
+        var product_mince = document.createElement("BUTTON");
+        var mince_text = document.createTextNode("-");
+        product_mince.appendChild(mince_text);
+        var product_remove = document.createElement("BUTTON");
+        var remove_text = document.createTextNode("X");
+        product_remove.appendChild(remove_text);
+        order_div.appendChild(product_name);
+        order_div.appendChild(product_quantity);
+        order_div.appendChild(product_add);
+        order_div.appendChild(product_mince);
+        order_div.appendChild(product_price);
+        order_div.appendChild(product_remove);
+        order_div.innerHTML+="<hr/>"
+    }
+
+
+</script>

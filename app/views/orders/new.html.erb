@@ -1,5 +1,217 @@
-<h1>New Order</h1>
+<div class="col-md-12">
 
-<%= render 'form', order: @order %>
+    <div class="col-md-1"></div>
 
-<%= link_to 'Back', orders_path %>
+    <div class="col-md-10">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div id="order" class="panel-body">
+                        </div>
+                        <hr/>
+                        <div>
+                            notes:<input type="text">
+                            <br>
+                            total:<label id="total" >
+                            <br>
+                            <input type="button" value="check out">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div>
+                                <ul class="nav nav-tabs">
+
+                                    <% @categories.each_with_index do |category,index| %>
+
+
+                                        <li class=" <%= 'active' if index==0%> ">
+                                            <a data-toggle="tab" href="#cat-<%=category.id%>">
+                                                <%=category.name%>
+                                            </a>
+                                        </li>
+
+                                        <% end %>
+                                </ul>
+                            </div>
+                            <div id="tab-content" class="tab-content">
+
+                                <% @categories.each_with_index do |category,index| %>
+                                    <div id='cat-<%=category.id%>' class="tab-pane fade in <%= 'active' if index==0%> ">
+
+                                        <% category.products.each do |product| %>
+                                            <p>
+                                                <%=product.name%>
+                                                <%=product.price%>
+                                                    <% # if product.avatar.exists?%>
+                                                        <%= image_tag product.avatar.url , class:"img-thumbnail" ,onclick:"addProductToOrder("+(product.id).to_s+")" ,style:"width:150px" %>
+                                                    <% # end%>
+                                            </p>
+                                            <% end %>
+                                                <br/>
+                                    </div>
+
+                                    <% end %>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Tea
+<input type="number" onchange="textChange(i)">
+<button onclick="increment(i)">+</button>
+<button onclick="decrement(i)">-</button> EGP 3
+<button onclick="remove(i)">x</button>
+-->
+
+<script>
+
+
+    var products = <%= @products.to_json.html_safe %>
+    var categories = <%= @categories.to_json.html_safe %>
+    
+    var productsMap =new Map();
+    products.forEach(function(obj){
+        productsMap.set(obj.id,obj);
+    });
+
+    var products_div = document.getElementById("tab-content");
+    function drawProducts (){
+        categories.forEach(function(category){
+            document.getElementById("cat-"+category.id).innerHTML="";
+        });
+     for (var product of productsMap.values()) {
+            console.log(product)
+            var category_div = document.getElementById("cat-"+product.category_id)
+            var product_div = document.createElement("div");
+            var product_name = document.createTextNode(product.name);
+            var product_price = document.createTextNode(" EGP " + product.price + " ");
+            var product_avatar = document.createElement("img");
+            product_avatar.setAttribute("onclick","addProductToOrder("+product.id+")");
+            product_avatar.src="http://"+product.avatar_file_name
+            product_div.appendChild(product_name);
+            product_div.appendChild(product_avatar);
+            product_div.appendChild(product_price);
+            category_div.appendChild(product_div)
+        }
+    }
+
+    drawProducts();
+    
+    var model = {};
+
+    var order_products = new Map();
+    var order_div = document.getElementById("order");
+    var total_label = document.getElementById("total");
+
+    function drawOrder(){
+        order_div.innerHTML='';
+        var total = 0;
+        for (var product of order_products.values()) {
+            var product_name = document.createTextNode(product.name);
+            var product_price = document.createTextNode(" EGP " + product.price + " ");
+            var product_quantity = document.createElement("input");
+            product_quantity.type="NUMBER";
+            product_quantity.id="quantity_input"+product.id            
+            product_quantity.setAttribute("value" ,product.quantity);
+            product_quantity.setAttribute("oninput","setQuantity("+product.id+",this.value)")
+            var product_add = document.createElement("BUTTON");
+            var add_text = document.createTextNode("+");
+            product_add.appendChild(add_text);
+            product_add.setAttribute("onclick","changeQuantity("+product.id+",'+'"+")")
+            var product_mince = document.createElement("BUTTON");
+            var mince_text = document.createTextNode("-");
+            product_mince.appendChild(mince_text);
+            product_mince.setAttribute("onclick","changeQuantity("+product.id+",'-'"+")")
+            var product_remove = document.createElement("BUTTON");
+            product_remove.type="button";
+            product_remove.setAttribute("onclick","removeProductFromOrder("+product.id+")")
+    //        product_remove.onclick=alert(product.id)
+            var remove_text = document.createTextNode("X");
+            product_remove.appendChild(remove_text);
+            order_div.appendChild(product_name);
+            order_div.appendChild(product_quantity);
+            order_div.appendChild(product_add);
+            order_div.appendChild(product_mince);
+            order_div.appendChild(product_price);
+            order_div.appendChild(product_remove);
+            order_div.innerHTML += "<hr/>"
+            total+=(product.price * product.quantity)
+            }
+            total_label.innerText=total;
+        }
+
+        function removeProductFromOrder(id){
+            order_products.delete(id)
+            drawOrder();
+        }
+
+        function removeProduct(id){
+            productsMap.delete(id)
+            drawProducts();
+            removeProductFromOrder(id);
+        }
+        function addProduct(product){
+            productsMap.set(product.id,product);
+            drawProducts();
+        }
+
+        function changeQuantity(id,operand){
+            var product = order_products.get(id);
+            if(product.quantity<1 && operand=='-' )
+                return;
+            product.quantity=(operand=="+")?product.quantity+1:product.quantity-1;
+
+            order_products.set(id,product);
+            drawOrder();            
+
+        }
+
+        function setQuantity(id ,quantity){
+            
+            if(isNaN(quantity) || quantity <0 )
+                return;
+            var product = order_products.get(id);
+            product.quantity=quantity;
+            order_products.set(id,product);
+            drawOrder();            
+            document.getElementById("quantity_input"+id).focus();
+            document.getElementById("quantity_input"+id).value =quantity
+        }
+
+        function addProductToOrder (id){
+            var product = productsMap.get(id);
+            if(order_products.get(id)){
+                var oldQuantity = order_products.get(id).quantity;
+                product.quantity=oldQuantity + 1;
+                order_products.set(id,product) 
+            }
+            else{
+                product.quantity=1
+                order_products.set(id,product)
+            }
+            // products[0].quantity=(products[0].quantity)?products[0].quantity+1:1
+            // order_products.push (products[0])
+            drawOrder()
+        }
+
+</script>

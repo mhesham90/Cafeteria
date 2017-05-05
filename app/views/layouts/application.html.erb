@@ -41,7 +41,6 @@
                                 <!--<li><a href="" class="active">r</a></li>-->
                                 <% if user_signed_in? %>
 
-
                                     <li><a href="/">Home</a></li>
                                   <li><a href="/#mainmenu">Menu</a></li>
                                   <li><a href="/orders/new">Order</a></li>
@@ -76,9 +75,6 @@
 
                                     <%end%>
                                   <!--end if admin-->
-
-
-
 
                                     <li>
                                         <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
@@ -146,7 +142,7 @@
                 </div>
             </footer>
             <!--  end footer  -->
-            <script src='../ga.js'></script>
+            <!--<script src='../ga.js'></script>-->
 
 </body>
 

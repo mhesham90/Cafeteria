@@ -43,8 +43,8 @@
 
                                     <li><a href="/">Home</a></li>
                                   <li><a href="/#mainmenu">Menu</a></li>
-                                  <li><a href="/orders/new">Order</a></li>
-                                    <li><a href="/orders">My Orders</a></li>
+
+
 
                                   <li><a href="/user/edit">Edit profile</a></li>
 
@@ -58,6 +58,9 @@
 
 
                                     <ul class="dropdown-menu" >
+                                      <li><a href="/orders/1/edit">Orders</a></li>
+                                      <li><a href="/orders">Checks</a></li>
+                                      <li><a href="/orders/new">Make order</a></li>
 
                                       <li><a href="/products/new">Add New product</a></li>
                                       <li><a href="/products">Edit all products</a></li>
@@ -69,11 +72,12 @@
                                       <li><a href="/categories"> Manage Categories  </a></li>
 
                                     </ul>
+                                  <%else%>
+                                      <li><a href="/orders/new">Order</a></li>
+                                      <li><a href="/orders">My Orders</a></li>
+                                  <%end%>
 
-                                  </li>
 
-
-                                    <%end%>
                                   <!--end if admin-->
 
                                     <li>

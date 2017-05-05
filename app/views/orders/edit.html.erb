@@ -1,6 +1,82 @@
-<h1>Editing Order</h1>
+<div class="col-md-6">
+  <section class="menu">
+    <div class="menu_title" id="mainmenu">
+      <h2>Orders</h2>
 
-<%= render 'form', order: @order %>
+      <div style="text-align: left">
+        <table class="table table-hover">
 
-<%= link_to 'Show', @order %> |
-<%= link_to 'Back', orders_path %>
+          <thead>
+          <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>room</th>
+            <th>total</th>
+            <th></th>
+          </tr>
+          </thead>
+          <% @orders.each do |order| %>
+              <%= form_for(order) do |f| %>
+                  <% if order.status==0 or order.status==1  %>
+
+
+                      <tbody>
+                      <tr data-toggle="collapse" data-target="#<%= order.id %>" class="clickable">
+                        <td><%= order.created_at %></td>
+                        <td><%= order.user.first_name %></td>
+                        <td><%= order.user.room.name %></td>
+                        <td><%= order.user.room.name %></td>
+
+                        <td>
+                          <%if order.status==0%>
+                          <%= f.submit 'process', class: "btn btn-default" %>
+
+
+                            <%= f.number_field :status, class: "hidden", style: "width:100%", value: 1 %>
+
+                        <%else%>
+                              <%= f.submit 'deliver', class: "btn btn-default" %>
+
+
+                              <%= f.number_field :status, class: "hidden", style: "width:100%", value: 2 %>
+                              <%end%>
+                        </td>
+                      </tr>
+                      <tr>
+
+
+
+                        <td colspan="5">
+                          <div id="<%= order.id %>" class="collapse">
+                            <% order.products.each do |product| %>
+                                <div class="col-md-4">
+                                  <div class="panel panel-default">
+                                    <div class="panel-heading"><%= product.name %></div>
+                                    <div class="panel-body">
+                                      <% if product.avatar.present? %>
+                                          <%= image_tag product.avatar.url, class: "img-thumbnail" %>
+                                      <% end %></div>
+                                    <div class="panel-footer"><%= product.price %> LE</div>
+                                  </div>
+                                </div>
+
+                            <% end %>
+
+
+                          </div>
+                        </td>
+                      </tr>
+
+
+                  <% end %>
+              <% end %>
+
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="col-md-2"></div>

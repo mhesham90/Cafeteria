@@ -16,4 +16,9 @@ class User < ActiveRecord::Base
                     },
                     :path => 'users/:id/:style/:filename'
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
+  attr_reader :full_name
+
+  def full_name
+    (self.first_name + " " + self.last_name).titleize()
+  end
 end

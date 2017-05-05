@@ -14,71 +14,62 @@
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-      <div class="accordion">
+  <div class="accordion">
 
-        <section class="menu">
-          <div class="menu_title" id="mainmenu">
-            <h2>Checks</h2>
-          </div>
-        <form class="scrollable">
+    <section class="menu">
+      <div class="menu_title" id="mainmenu">
+        <h2>Checks</h2>
+      </div>
+      <form class="scrollable">
         <dl>
-          <% @orders.group_by(&:user).each do |user, orders| %>
-                  <dt>
-                    <a href="#accordionu" aria-expanded="false" aria-controls="accordionu" class="accordion-title accordionTitle js-accordionTrigger">
-                      <%= user.email %>
-                    </a>
-                  </dt>
-                  <dd class="accordion-content accordionItem is-collapsed occuser" id="accordionu" aria-hidden="true">
-                    <dl>
-                      <% orders.each do |order| %>
-                              <dt>
-                                <a href="#accordion1" aria-expanded="false" aria-controls="accordion1" class="accordion-title accordionTitle js-accordionTrigger">
-                                  Order create at <%= distance_of_time_in_words(order.created_at, Time.now) %> ago
-                                </a>
-                              </dt>
-                              <dd class="accordion-content accordionItem is-collapsed" id="accordion1" aria-hidden="true" >
-                                <table class="table">
-                                  <thead>
-                                  <tr>
-                                    <th>Status</th>
-                                    <th>order time</th>
-                                    <th>items </th>
-                                    <th>total</th>
-                                    <th></th>
-                                  </tr>
-                                  </thead>
-                                  <tbody>
-                                  <% if order.status==0 %>
-                                      <td>pending</td>
-                                  <% elsif order.status==1 %>
-                                      <td>processing</td>
-                                  <% elsif order.status==2 %>
-                                      <td>out for delivery</td>
-                                  <% elsif order.status==3 %>
-                                      <td>finished</td>
-                                  <% end %>
-                                  <td><%= order.created_at %></td>
-                                  <td>
-                                    <% order.products.each do |product| %>
-                                        <%= product.name %> <br/>
-                                    <%end%>
-                                  </td>
-                                  <td><%= order.total %></td>
-                                  </tbody>
-                                </table>
-                              </dd>
-                      <% end %>
-                    </dl>
-                  </dd>
+          <% @orders.order(created_at: :desc).group_by(&:user).each do |user, orders| %>
+              <%# @orders.where(status: 0).group_by(&:user).each do |user, orders| %>
+              <dt>
+                <a href="#accordionu" aria-expanded="false" aria-controls="accordionu" class="accordion-title accordionTitle js-accordionTrigger" style="text-align: left;">
+                  <div class="col-md-5 text-left noClick"> <%= user.full_name %></div>
+                  <div class="col-md-5 text-left noClick">
+                    Last ordered <%= distance_of_time_in_words(orders.first.created_at, Time.now) %> ago
+                  </div>
+                  <div class="pull-right noClick"> <%= orders.sum(&:total) %> $</div>
+                </a>
+              </dt>
+              <dd class="accordion-content accordionItem is-collapsed occuser" id="accordionu" aria-hidden="true">
+                <dl>
+                  <% orders.each do |order| %>
+                      <dt>
+                        <a href="#accordion1" aria-expanded="false" aria-controls="accordion1" class="accordion-title accordionTitle js-accordionTrigger">
+                          <div class="col-md-6 text-left noClick"><%= order.created_at %></div>
+                          <div class="pull-right noClick"><%= order.total %> $</div>
+                        </a>
+                      </dt>
+                      <dd class="accordion-content accordionItem is-collapsed" id="accordion1" aria-hidden="true">
+                        <% order.orderdetails.each do |x| %>
+                            <div class="col-md-3 imgBox" style="margin-top: auto; ">
+                              <%= image_tag x.product.avatar.url, class: "img-responsive img-circle", style: "max-width:100px" %>
+                              <span class="p">
+                                  <%= x.product.price %> $
+                                  </span>
+                              <span class="t">
+                                    <%= x.product.name %>
+                                  </span>
+                              <span class="n">
+                                    <%= x.quantity %>
+                                  </span>
+                            </div>
+                        <% end %>
+                      </dd>
+                  <% end %>
+                </dl>
+              </dd>
           <% end %>
         </dl>
-        </form>
-        </section>
+      </form>
+    </section>
 
-      </div>
-    </div>
+  </div>
+</div>
 
 
 </body>
@@ -86,7 +77,7 @@
 </html>
 
 <script>
-    $('document').ready(function(){
+    $('document').ready(function () {
         var d = document,
             accordionToggles = d.querySelectorAll('.js-accordionTrigger'),
             setAria,
@@ -95,16 +86,16 @@
             touchSupported = ('ontouchstart' in window),
             pointerSupported = ('pointerdown' in window);
 
-        skipClickDelay = function(e){
+        skipClickDelay = function (e) {
             e.preventDefault();
             e.target.click();
         }
 
-        setAriaAttr = function(el, ariaType, newProperty){
+        setAriaAttr = function (el, ariaType, newProperty) {
             el.setAttribute(ariaType, newProperty);
         };
-        setAccordionAria = function(el1, el2, expanded){
-            switch(expanded) {
+        setAccordionAria = function (el1, el2, expanded) {
+            switch (expanded) {
                 case "true":
                     setAriaAttr(el1, 'aria-expanded', 'true');
                     setAriaAttr(el2, 'aria-hidden', 'false');
@@ -118,11 +109,16 @@
             }
         };
 //function
-        switchAccordion = function(e) {
+        switchAccordion = function (e) {
             e.preventDefault();
-            var thisAnswer = e.target.parentNode.nextElementSibling;
-            var thisQuestion = e.target;
-            if(thisAnswer.classList.contains('is-collapsed')) {
+            if (e.target.classList.contains('noClick')) {
+                var thisAnswer = e.target.parentNode.parentNode.nextElementSibling;
+                var thisQuestion = e.target.parentNode;
+            } else {
+                var thisAnswer = e.target.parentNode.nextElementSibling;
+                var thisQuestion = e.target;
+            }
+            if (thisAnswer.classList.contains('is-collapsed')) {
                 setAccordionAria(thisQuestion, thisAnswer, 'true');
             } else {
                 setAccordionAria(thisQuestion, thisAnswer, 'false');
@@ -134,11 +130,11 @@
 
             thisAnswer.classList.toggle('animateIn');
         };
-        for (var i=0,len=accordionToggles.length; i<len; i++) {
-            if(touchSupported) {
+        for (var i = 0, len = accordionToggles.length; i < len; i++) {
+            if (touchSupported) {
                 accordionToggles[i].addEventListener('touchstart', skipClickDelay, false);
             }
-            if(pointerSupported){
+            if (pointerSupported) {
                 accordionToggles[i].addEventListener('pointerdown', skipClickDelay, false);
             }
             accordionToggles[i].addEventListener('click', switchAccordion, false);
@@ -146,13 +142,53 @@
     });
 </script>
 <style>
-  dd.occuser{
+  dd.occuser {
     width: 90%;
     margin-left: 5%;
   }
+
   form.scrollable {
     max-height: 500px;
     overflow-y: auto;
+  }
+
+  .imgBox {
+    position: relative;
+  }
+
+  .imgBox span {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    position: absolute;
+  }
+
+  .imgBox span.p {
+    width: 50px;
+    height: 50px;
+    line-height: 45px;
+    right: 5px;
+    top: 10px;
+    background: url(http://res.cloudinary.com/cafeteria/image/upload/static/price2_gcznvb.png) no-repeat top right;
+  }
+
+  .imgBox span.t {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    right: 12px;
+    top: 40px;
+    background: url(http://res.cloudinary.com/cafeteria/image/upload/static/banner2_bhmmek.png) no-repeat top right;
+  }
+
+  .imgBox span.n {
+    width: 50px;
+    height: 50px;
+    line-height: 55px;
+    right: 105px;
+    top: 65px;
+    background: url(http://res.cloudinary.com/cafeteria/image/upload/static/circle_whmmlx.png) no-repeat top right;
   }
 
 </style>

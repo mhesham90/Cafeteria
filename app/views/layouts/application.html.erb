@@ -44,7 +44,7 @@
                                     <li><a href="/">Home</a></li>
                                   <li><a href="/#mainmenu">Menu</a></li>
                                   <li><a href="/orders/new">Order</a></li>
-                                    <li><a href="/orders">My Orders</a></li>
+                                    <li><a href="/orders"><%= current_user.admin=='1'?'Checks':'My Orders' %></a></li>
 
                                   <li><a href="/user/edit">Edit profile</a></li>
 

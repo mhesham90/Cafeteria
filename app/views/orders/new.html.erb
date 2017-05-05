@@ -5,6 +5,11 @@
     <div class="col-md-10">
 
         <div class="panel panel-default">
+          <section class="menu">
+            <div class="menu_title" id="mainmenu">
+              <h2>Order </h2>
+
+
             <div class="panel-body">
                 <div class="col-md-4">
                     <div class="panel panel-default">
@@ -20,12 +25,41 @@
                     </div>
                 </div>
                 <div class="col-md-8">
+                  <% if current_user.admin=='1'%>
                     <div class="panel panel-default">
                         <div class="panel-body">
 
+                                <select>
+                                <% @users.each do |user| %>
+                                    <option value="<% user.id %>"><%= user.first_name + " " +user.last_name  %></option>
+                                <%end%>
+                                </select>
+                            <% else %>
 
-                        </div>
-                    </div>
+                                <% if current_user.orders.last %>
+                          <div class="panel panel-default">
+
+                              <div class="panel-body">
+                                    <% current_user.orders.last.products.each do |product| %>
+                                            <p>
+
+                                                <%=product.name%>
+                                                <%=product.price%>
+                                            </p> </div></div>
+                                                    <%  if product.avatar.present?%>
+                                                        <%= image_tag product.avatar.url , class:"img-thumbnail" ,onclick:"addProductToOrder("+(product.id).to_s+")" ,style:"width:150px" %>
+                                                    <%  end%>
+                                            </p>                                    
+                                        <%end%>
+                                    
+                                    <% else %>
+                                    <h1>It's our pleasure to take your first order </h1>
+
+                                    <%end%>
+
+
+                  <% end %>
+
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div>
@@ -47,19 +81,7 @@
 
                                 <% @categories.each_with_index do |category,index| %>
                                     <div id='cat-<%=category.id%>' class="tab-pane fade in <%= 'active' if index==0%> ">
-
-                                        <% category.products.each do |product| %>
-                                            <p>
-                                                <%=product.name%>
-                                                <%=product.price%>
-                                                    <% # if product.avatar.exists?%>
-                                                        <%= image_tag product.avatar.url , class:"img-thumbnail" ,onclick:"addProductToOrder("+(product.id).to_s+")" ,style:"width:150px" %>
-                                                    <% # end%>
-                                            </p>
-                                            <% end %>
-                                                <br/>
                                     </div>
-
                                     <% end %>
 
                             </div>
@@ -71,6 +93,10 @@
 
                 </div>
             </div>
+            </div>
+            </div>
+            </div>
+          </section>
         </div>
     </div>
 </div>

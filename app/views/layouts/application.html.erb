@@ -43,6 +43,9 @@
 
                                     <li><a href="/">Home</a></li>
                                   <li><a href="/#mainmenu">Menu</a></li>
+
+
+
                                   <li><a href="/orders/new">Order</a></li>
                                     <li><a href="/orders"><%= current_user.admin=='1'?'Checks':'My Orders' %></a></li>
 
@@ -51,6 +54,7 @@
                               <!--if admin-->
 
                                       <% if current_user.admin=='1'%>
+                                      <li><a href="/orders/1/edit">Incomming Orders</a></li>
                                        <li class="dropdown">
 
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:black">Admin
@@ -58,6 +62,9 @@
 
 
                                     <ul class="dropdown-menu" >
+                                      <li><a href="/orders/1/edit">Orders</a></li>
+
+
 
                                       <li><a href="/products/new">Add New product</a></li>
                                       <li><a href="/products">Edit all products</a></li>
@@ -69,11 +76,11 @@
                                       <li><a href="/categories"> Manage Categories  </a></li>
 
                                     </ul>
+                                  <%else%>
 
-                                  </li>
+                                  <%end%>
 
 
-                                    <%end%>
                                   <!--end if admin-->
 
                                     <li>

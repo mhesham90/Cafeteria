@@ -61,7 +61,7 @@
                   <% elsif order.status==2 %>
                       <td>out for delivery</td>
                   <% elsif order.status==3 %>
-                      <td>finished</td>
+                      <td>cancelled</td>
                   <% end %>
                   <td><%= order.created_at %></td>
 
@@ -77,9 +77,12 @@
 
                   <td><%= order.products.sum(:price)%></td>
                   <% if order.status==0 %>
-                      <td><%= link_to 'cancel', order, method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" %>
+                      <%= form_for :orders, :html => {:class => "form-horizontal center"} ,url: order_path(order.id), method: :patch do |f|%>
+                          <%= f.text_field :status ,class: "hidden",value:"2" %>
+                      <td><%=  f.submit "Cancel", class: "btn btn-default " ,class: "btn btn-default" %>
 
                       </td>
+                  <%end%>
                   <% end %>
 
                   </tr>

@@ -23,6 +23,7 @@ class OrdersController < ApplicationController
   def new
       @products = Product.all
       @categories = Category.all
+      @users = User.all      
       puts ("products")
       puts @categories.first.products.size
       current_user.orders.last

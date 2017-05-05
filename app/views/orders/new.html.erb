@@ -5,6 +5,11 @@
     <div class="col-md-10">
 
         <div class="panel panel-default">
+          <section class="menu">
+            <div class="menu_title" id="mainmenu">
+              <h2>Order </h2>
+
+
             <div class="panel-body">
                 <div class="col-md-4">
                     <div class="panel panel-default">
@@ -20,9 +25,10 @@
                     </div>
                 </div>
                 <div class="col-md-8">
+                  <% if current_user.admin=='1'%>
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <% if current_user.admin=='1'%>
+
                                 <select>
                                 <% @users.each do |user| %>
                                     <option value="<% user.id %>"><%= user.first_name + " " +user.last_name  %></option>
@@ -31,24 +37,29 @@
                             <% else %>
 
                                 <% if current_user.orders.last %>
+                          <div class="panel panel-default">
+
+                              <div class="panel-body">
                                     <% current_user.orders.last.products.each do |product| %>
                                             <p>
+
                                                 <%=product.name%>
                                                 <%=product.price%>
-                                                    <%  if product.avatar.exists?%>
+                                            </p> </div></div>
+                                                    <%  if product.avatar.present?%>
                                                         <%= image_tag product.avatar.url , class:"img-thumbnail" ,onclick:"addProductToOrder("+(product.id).to_s+")" ,style:"width:150px" %>
                                                     <%  end%>
                                             </p>                                    
                                         <%end%>
                                     
                                     <% else %>
-                                    <h1>we are pleasure to take your first order </h1>
+                                    <h1>It's our pleasure to take your first order </h1>
 
                                     <%end%>
-                            <% end %>
 
-                        </div>
-                    </div>
+
+                  <% end %>
+
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div>
@@ -82,6 +93,10 @@
 
                 </div>
             </div>
+            </div>
+            </div>
+            </div>
+          </section>
         </div>
     </div>
 </div>

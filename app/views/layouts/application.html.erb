@@ -4,7 +4,7 @@
 <head>
 
 
-    <title>The cafeteria</title>
+    <!--<title>The cafeteria</title>-->
     <meta charset="utf-8">
     <meta name="author" content="pixelhint.com">
     <meta name="description" content="Resto HTML5/CSS3 Restaurant Home Page website Template" />
@@ -19,11 +19,10 @@
     <script type="text/javascript" src="/javascripts/main.js"></script>
 
 
-    <title>Cafeteria</title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
         <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
             <%= csrf_meta_tags %>
-
+  <%= yield :head %>
 </head>
 
 

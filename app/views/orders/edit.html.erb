@@ -1,3 +1,8 @@
+<% content_for :head do %>
+    <title>Incomming</title>
+    <script type="text/javascript" src="/javascripts/channels/orders.js"></script>
+<% end %>
+
 <div class="col-md-6">
   <section class="menu">
     <div class="menu_title" id="mainmenu">
@@ -15,7 +20,7 @@
             <th></th>
           </tr>
           </thead>
-          <% @orders.each do |order| %>
+          <% @orders.order(created_at: :desc).each do |order| %>
               <%= form_for(order) do |f| %>
                   <% if order.status==0 or order.status==1 %>
 
@@ -25,7 +30,7 @@
                         <td><%= order.created_at %></td>
                         <td><%= order.user.first_name %></td>
                         <td><%= order.user.room.name %></td>
-                        <td><%= order.user.room.name %></td>
+                        <td><%= order.total %></td>
 
                         <td>
                           <% if order.status==0 %>

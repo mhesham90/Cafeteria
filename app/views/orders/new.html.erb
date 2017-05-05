@@ -13,9 +13,8 @@
                         <hr/>
                         <div>
                             notes:<input type="text">
-                            <br>
-                            total:<label id="total" >
-                            <br>
+                            total:<label id="total" ></label>
+
                             <input type="button" value="check out">
                         </div>
                     </div>
@@ -85,6 +84,8 @@
 
 <script>
 
+    var IMAGE_URL = "https://res.cloudinary.com/cafeteria/image/upload/v1/products/";
+    var IMAGE_SIZE = "medium";
 
     var products = <%= @products.to_json.html_safe %>
     var categories = <%= @categories.to_json.html_safe %>
@@ -107,7 +108,7 @@
             var product_price = document.createTextNode(" EGP " + product.price + " ");
             var product_avatar = document.createElement("img");
             product_avatar.setAttribute("onclick","addProductToOrder("+product.id+")");
-            product_avatar.src="http://"+product.avatar_file_name
+            product_avatar.src=IMAGE_URL+product.id+"/"+IMAGE_SIZE+"/"+product.avatar_file_name
             product_div.appendChild(product_name);
             product_div.appendChild(product_avatar);
             product_div.appendChild(product_price);

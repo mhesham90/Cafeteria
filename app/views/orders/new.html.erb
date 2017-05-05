@@ -44,17 +44,18 @@
                                         <% end %>
                                 </ul>
                             </div>
-                            <div class="tab-content">
+                            <div id="tab-content" class="tab-content">
 
                                 <% @categories.each_with_index do |category,index| %>
                                     <div id='cat-<%=category.id%>' class="tab-pane fade in <%= 'active' if index==0%> ">
+
                                         <% category.products.each do |product| %>
                                             <p>
                                                 <%=product.name%>
                                                 <%=product.price%>
-                                                    <% if product.avatar.exists?%>
+                                                    <% # if product.avatar.exists?%>
                                                         <%= image_tag product.avatar.url , class:"img-thumbnail" ,onclick:"addProductToOrder("+(product.id).to_s+")" ,style:"width:150px" %>
-                                                    <%end%>
+                                                    <% # end%>
                                             </p>
                                             <% end %>
                                                 <br/>
@@ -86,24 +87,43 @@
 
 
     var products = <%= @products.to_json.html_safe %>
-    console.log(products.length)
+    var categories = <%= @categories.to_json.html_safe %>
     
     var productsMap =new Map();
     products.forEach(function(obj){
         productsMap.set(obj.id,obj);
     });
-    console.log(productsMap.size)
-        
-    for (var product of productsMap.values()) 
-            console.log(product)
 
+    var products_div = document.getElementById("tab-content");
+    function drawProducts (){
+        categories.forEach(function(category){
+            document.getElementById("cat-"+category.id).innerHTML="";
+        });
+     for (var product of productsMap.values()) {
+            console.log(product)
+            var category_div = document.getElementById("cat-"+product.category_id)
+            var product_div = document.createElement("div");
+            var product_name = document.createTextNode(product.name);
+            var product_price = document.createTextNode(" EGP " + product.price + " ");
+            var product_avatar = document.createElement("img");
+            product_avatar.setAttribute("onclick","addProductToOrder("+product.id+")");
+            product_avatar.src="http://"+product.avatar_file_name
+            product_div.appendChild(product_name);
+            product_div.appendChild(product_avatar);
+            product_div.appendChild(product_price);
+            category_div.appendChild(product_div)
+        }
+    }
+
+    drawProducts();
+    
     var model = {};
 
     var order_products = new Map();
     var order_div = document.getElementById("order");
     var total_label = document.getElementById("total");
 
-    function drowOrder(){
+    function drawOrder(){
         order_div.innerHTML='';
         var total = 0;
         for (var product of order_products.values()) {
@@ -142,7 +162,17 @@
 
         function removeProductFromOrder(id){
             order_products.delete(id)
-            drowOrder();
+            drawOrder();
+        }
+
+        function removeProduct(id){
+            productsMap.delete(id)
+            drawProducts();
+            removeProductFromOrder(id);
+        }
+        function addProduct(product){
+            productsMap.set(product.id,product);
+            drawProducts();
         }
 
         function changeQuantity(id,operand){
@@ -152,7 +182,7 @@
             product.quantity=(operand=="+")?product.quantity+1:product.quantity-1;
 
             order_products.set(id,product);
-            drowOrder();            
+            drawOrder();            
 
         }
 
@@ -163,7 +193,7 @@
             var product = order_products.get(id);
             product.quantity=quantity;
             order_products.set(id,product);
-            drowOrder();            
+            drawOrder();            
             document.getElementById("quantity_input"+id).focus();
             document.getElementById("quantity_input"+id).value =quantity
         }
@@ -181,7 +211,7 @@
             }
             // products[0].quantity=(products[0].quantity)?products[0].quantity+1:1
             // order_products.push (products[0])
-            drowOrder()
+            drawOrder()
         }
 
 </script>

@@ -5,12 +5,13 @@ class OrdersController < ApplicationController
   # GET /orders.json
   def index
     @orders = Order.all
-
-    # if current_user.admin == 0 
-    #   render checks 
-    # else 
-    #   render list order
-
+    @users=User.all
+     if current_user.admin == '1' 
+         render "checks"  # checks
+     else
+       @orders = Order.all
+        render "index"
+     end
   end
 
   # GET /orders/1
@@ -34,6 +35,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
+    # render orders for admin
   end
 
   # POST /orders

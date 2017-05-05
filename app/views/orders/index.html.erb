@@ -1,8 +1,15 @@
 <head>
 </head>
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div style="text-align: center">
+        <h3>My orders</h3></div>
 <p id="notice"><%= notice %></p>
 
-<h1>Orders</h1>
+
+
+
 
 <table>
   <thead>
@@ -16,14 +23,17 @@
 
   <tbody>
     <% @orders.each do |order| %>
+  <%if order.user.id==current_user.id%>
       <tr>
         <td><%= order.notes %></td>
         <td><%= order.status %></td>
         <td><%= order.created_at %></td>
+        <td><%= order.user.first_name %></td>
         <td><%= link_to 'Show', order %></td>
         <td><%= link_to 'Edit', edit_order_path(order) %></td>
         <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+  <%end%>
     <% end %>
   </tbody>
 </table>
@@ -31,3 +41,6 @@
 <br>
 
 <%= link_to 'New Order', new_order_path %>
+    </div>
+  </div>
+</div>

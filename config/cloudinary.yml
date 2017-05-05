@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: cafeteria
+  api_key: '464512776844869'
+  api_secret: 3BBVLLFXUJ_GfahwcF2H21avgXk
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: cafeteria
+  api_key: '464512776844869'
+  api_secret: 3BBVLLFXUJ_GfahwcF2H21avgXk
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: cafeteria
+  api_key: '464512776844869'
+  api_secret: 3BBVLLFXUJ_GfahwcF2H21avgXk
+  enhance_image_tag: true
+  static_image_support: false

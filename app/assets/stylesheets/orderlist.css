@@ -18,6 +18,7 @@ body {
 .accordion dl,
 .accordion-list {
     border: 1px solid #ddd;
+    max-height: 500px;
 }
 .accordion dl:after,
 .accordion-list:after {
@@ -33,6 +34,8 @@ body {
     background-color: #eee;
     font-size: 1em;
     /*line-height: 1.5em;*/
+    height: 340px;
+
 }
 
 .accordion p {
@@ -93,7 +96,7 @@ body {
 .accordionItem {
     height: auto;
     overflow: hidden;
-    /*max-height: 50em;*/
+    max-height: 1000px;
     -webkit-transition: max-height 1s;
     transition: max-height 1s;
 }

@@ -3,6 +3,14 @@ class Order < ApplicationRecord
   has_many :orderdetails
   has_many :products, through: :orderdetails
 
+  attr_reader :total
+
+  def total
+    sum=0
+    self.orderdetails.each{ |x| sum += x.product.price * x.quantity }
+    sum
+  end
+
   after_create ->{
     OrderCreateJob.perform_now(self)
   }

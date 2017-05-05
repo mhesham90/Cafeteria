@@ -17,7 +17,7 @@
           </thead>
           <% @orders.each do |order| %>
               <%= form_for(order) do |f| %>
-                  <% if order.status==0 or order.status==1  %>
+                  <% if order.status==0 or order.status==1 %>
 
 
                       <tbody>
@@ -28,22 +28,17 @@
                         <td><%= order.user.room.name %></td>
 
                         <td>
-                          <%if order.status==0%>
-                          <%= f.submit 'process', class: "btn btn-default" %>
+                          <% if order.status==0 %>
+                              <%= f.submit 'process', class: "btn btn-default" %>
+                              <%= f.number_field :status, class: "hidden", style: "width:100%", value: 1 %>
 
-
-                            <%= f.number_field :status, class: "hidden", style: "width:100%", value: 1 %>
-
-                        <%else%>
+                          <% else %>
                               <%= f.submit 'deliver', class: "btn btn-default" %>
-
-
                               <%= f.number_field :status, class: "hidden", style: "width:100%", value: 2 %>
-                              <%end%>
+                          <% end %>
                         </td>
                       </tr>
                       <tr>
-
 
 
                         <td colspan="5">

@@ -13,9 +13,8 @@
                         <hr/>
                         <div>
                             notes:<input type="text">
-                            <br>
-                            total:<label id="total" >
-                            <br>
+                            total:<label id="total" ></label>
+
                             <input type="button" value="check out">
                         </div>
                     </div>
@@ -23,7 +22,30 @@
                 <div class="col-md-8">
                     <div class="panel panel-default">
                         <div class="panel-body">
+                            <% if current_user.admin=='1'%>
+                                <select>
+                                <% @users.each do |user| %>
+                                    <option value="<% user.id %>"><%= user.first_name + " " +user.last_name  %></option>
+                                <%end%>
+                                </select>
+                            <% else %>
 
+                                <% if current_user.orders.last %>
+                                    <% current_user.orders.last.products.each do |product| %>
+                                            <p>
+                                                <%=product.name%>
+                                                <%=product.price%>
+                                                    <%  if product.avatar.exists?%>
+                                                        <%= image_tag product.avatar.url , class:"img-thumbnail" ,onclick:"addProductToOrder("+(product.id).to_s+")" ,style:"width:150px" %>
+                                                    <%  end%>
+                                            </p>                                    
+                                        <%end%>
+                                    
+                                    <% else %>
+                                    <h1>we are pleasure to take your first order </h1>
+
+                                    <%end%>
+                            <% end %>
 
                         </div>
                     </div>
@@ -48,19 +70,7 @@
 
                                 <% @categories.each_with_index do |category,index| %>
                                     <div id='cat-<%=category.id%>' class="tab-pane fade in <%= 'active' if index==0%> ">
-
-                                        <% category.products.each do |product| %>
-                                            <p>
-                                                <%=product.name%>
-                                                <%=product.price%>
-                                                    <% # if product.avatar.exists?%>
-                                                        <%= image_tag product.avatar.url , class:"img-thumbnail" ,onclick:"addProductToOrder("+(product.id).to_s+")" ,style:"width:150px" %>
-                                                    <% # end%>
-                                            </p>
-                                            <% end %>
-                                                <br/>
                                     </div>
-
                                     <% end %>
 
                             </div>
@@ -85,6 +95,8 @@
 
 <script>
 
+    var IMAGE_URL = "https://res.cloudinary.com/cafeteria/image/upload/v1/products/";
+    var IMAGE_SIZE = "medium";
 
     var products = <%= @products.to_json.html_safe %>
     var categories = <%= @categories.to_json.html_safe %>
@@ -107,7 +119,7 @@
             var product_price = document.createTextNode(" EGP " + product.price + " ");
             var product_avatar = document.createElement("img");
             product_avatar.setAttribute("onclick","addProductToOrder("+product.id+")");
-            product_avatar.src="http://"+product.avatar_file_name
+            product_avatar.src=IMAGE_URL+product.id+"/"+IMAGE_SIZE+"/"+product.avatar_file_name
             product_div.appendChild(product_name);
             product_div.appendChild(product_avatar);
             product_div.appendChild(product_price);

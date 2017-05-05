@@ -46,6 +46,10 @@
 
 
 
+                                  <li><a href="/orders/new">Order</a></li>
+                                    <li><a href="/orders"><%= current_user.admin=='1'?'Checks':'My Orders' %></a></li>
+
+                                  <li><a href="/orders/1/edit">Incomming Orders</a></li>
                                   <li><a href="/user/edit">Edit profile</a></li>
 
                               <!--if admin-->
@@ -59,8 +63,7 @@
 
                                     <ul class="dropdown-menu" >
                                       <li><a href="/orders/1/edit">Orders</a></li>
-                                      <li><a href="/orders">Checks</a></li>
-                                      <li><a href="/orders/new">Make order</a></li>
+
 
                                       <li><a href="/products/new">Add New product</a></li>
                                       <li><a href="/products">Edit all products</a></li>

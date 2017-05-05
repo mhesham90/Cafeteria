@@ -1,46 +1,166 @@
 <head>
+  <meta charset="UTF-8">
+  <title>CSS Responsive animated Accordion</title>
+  <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/css/reset.css">
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/css/orderlist.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+
 </head>
-<div class="col-md-6">
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <div style="text-align: center">
-        <h3>My orders</h3></div>
-<p id="notice"><%= notice %></p>
+
+<body>
+
+
+<div class="container">
+
+  <div class="accordion">
+
+    <section class="menu">
+      <div class="menu_title" id="mainmenu">
+        <h2>My orders</h2>
+      </div>
+    </section>
+    <dl>
+
+      <% @orders.each do |order| %>
+          <% if order.user.id==current_user.id %>
+
+              <dt>
+                <a href="#accordion1" aria-expanded="false" aria-controls="accordion1" class="accordion-title accordionTitle js-accordionTrigger">
+                  Order create at <%= distance_of_time_in_words(order.created_at, Time.now) %> ago
+
+
+                </a>
+              </dt>
+              <dd class="accordion-content accordionItem is-collapsed" id="accordion1" aria-hidden="true">
+                <table class="table">
+                  <thead>
+                  <tr>
+
+                    <th>Status</th>
+                    <th>order time</th>
+
+                    <th>items </th>
+                    <th>total</th>
+                    <th></th>
+
+
+                  </tr>
+                  </thead>
+
+                  <tbody>
+
+                  <% if order.status==0 %>
+                      <td>pending</td>
+                  <% elsif order.status==1 %>
+                      <td>processing</td>
+                  <% elsif order.status==2 %>
+                      <td>out for delivery</td>
+                  <% elsif order.status==3 %>
+                      <td>finished</td>
+                  <% end %>
+                  <td><%= order.created_at %></td>
 
 
 
 
+                  <td>
+                  <% order.products.each do |product| %>
+                        <%= product.name %> <br/>
+                  <%end%>
+                    </td>
 
-<table>
-  <thead>
-    <tr>
-      <th>Notes</th>
-      <th>Status</th>
-      <th>Time</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @orders.each do |order| %>
-  <%if order.user.id==current_user.id%>
-      <tr>
-        <td><%= order.notes %></td>
-        <td><%= order.status %></td>
-        <td><%= order.created_at %></td>
-        <td><%= order.user.first_name %></td>
-        <td><%= link_to 'Show', order %></td>
-        <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-  <%end%>
-    <% end %>
-  </tbody>
-</table>
+                  <td><%= order.products.sum(:price)%></td>
+                  <% if order.status==0 %>
+                      <td><%= link_to 'cancel', order, method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" %>
 
-<br>
+                      </td>
+                  <% end %>
 
-<%= link_to 'New Order', new_order_path %>
-    </div>
+                  </tr>
+                  </tbody>
+                </table>
+
+
+              </dd>
+
+          <% end %>
+      <% end %>
+
+
+    </dl>
   </div>
 </div>
+
+</div>
+
+</body>
+
+</html>
+
+<script>
+    $('document').ready(function(){
+    var d = document,
+        accordionToggles = d.querySelectorAll('.js-accordionTrigger'),
+        setAria,
+        setAccordionAria,
+        switchAccordion,
+        touchSupported = ('ontouchstart' in window),
+        pointerSupported = ('pointerdown' in window);
+
+    skipClickDelay = function(e){
+        e.preventDefault();
+        e.target.click();
+    }
+
+    setAriaAttr = function(el, ariaType, newProperty){
+        el.setAttribute(ariaType, newProperty);
+    };
+    setAccordionAria = function(el1, el2, expanded){
+        switch(expanded) {
+            case "true":
+                setAriaAttr(el1, 'aria-expanded', 'true');
+                setAriaAttr(el2, 'aria-hidden', 'false');
+                break;
+            case "false":
+                setAriaAttr(el1, 'aria-expanded', 'false');
+                setAriaAttr(el2, 'aria-hidden', 'true');
+                break;
+            default:
+                break;
+        }
+    };
+//function
+    switchAccordion = function(e) {
+        console.log("triggered");
+        e.preventDefault();
+        var thisAnswer = e.target.parentNode.nextElementSibling;
+        var thisQuestion = e.target;
+        if(thisAnswer.classList.contains('is-collapsed')) {
+            setAccordionAria(thisQuestion, thisAnswer, 'true');
+        } else {
+            setAccordionAria(thisQuestion, thisAnswer, 'false');
+        }
+        thisQuestion.classList.toggle('is-collapsed');
+        thisQuestion.classList.toggle('is-expanded');
+        thisAnswer.classList.toggle('is-collapsed');
+        thisAnswer.classList.toggle('is-expanded');
+
+        thisAnswer.classList.toggle('animateIn');
+    };
+    for (var i=0,len=accordionToggles.length; i<len; i++) {
+        if(touchSupported) {
+            accordionToggles[i].addEventListener('touchstart', skipClickDelay, false);
+        }
+        if(pointerSupported){
+            accordionToggles[i].addEventListener('pointerdown', skipClickDelay, false);
+        }
+        accordionToggles[i].addEventListener('click', switchAccordion, false);
+    }
+});
+</script>

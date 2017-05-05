@@ -2,10 +2,13 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <p id="notice"><%= notice %></p>
-      <div style="text-align: center">
-        <h3>Product's Details</h3>
-        <hr/>
-      </div>
+      <section class="menu">
+        <div class="menu_title" id="mainmenu">
+          <h2>Details</h2>
+
+        </div>
+      </section>
+
 
 
 
@@ -45,7 +48,7 @@
 
          <tr>
            <td> <B>products image :</B> </td>
-           <% if @product.avatar.exists? %>
+           <% if @product.avatar.present? %>
            <td><%= image_tag @product.avatar.url, class: "img-thumbnail", style: "width:150px" %></td>
 <%else%>    <td>No image available</td>
           </p>
@@ -61,4 +64,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>

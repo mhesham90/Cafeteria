@@ -10,10 +10,7 @@
 
   <link rel="stylesheet" type="text/css" href="/css/reset.css">
   <link rel="stylesheet" type="text/css" href="/css/main.css">
-  <script type="text/javascript" src="/javascripts/jquery.js"></script>
-  <script type="text/javascript" src="/javascripts/carouFredSel.js"></script>
-  <script type="text/javascript" src="/javascripts/easing.js"></script>
-  <script type="text/javascript" src="/javascripts/main.js"></script>
+
 
 </head>
 
@@ -48,22 +45,22 @@
       <h2>The Menu</h2>
       <ul class="nav nav-tabs">
         <% @categories.each_with_index do |cat,index| %>
-        <li class="<%= 'active' if index==0%>"><a data-toggle="tab" href=#<%= cat.name%> style="color:black"> <%=cat.name%></a></li>
+        <li class="<%= 'active' if index==0%>"><a data-toggle="tab" href=#<%= cat.id%> style="color:black"> <%=cat.name%></a></li>
                                     <%end%>
 
       </ul>
     </div>
     <div class="tab-content">
       <% @categories.each_with_index do |cat,index| %>
-      <div id="<%= cat.name%>" class="tab-pane fade in <%= 'active' if index==0%>">
+      <div id="<%= cat.id%>" class="tab-pane fade in <%= 'active' if index==0%>">
         <div class="mean_menu">
           <!--  left menu row  -->
 
 
           <article class="lmenu">
             <ul>
-              <% @products.each_with_index do |product,index| %>
-                  <%if product.category.id== cat.id  and index %2==0%>
+              <% @products.each_with_index do |product,index2| %>
+                  <%if product.category.id== cat.id  and index2 %2==0%>
               <li>
 
                 <div class="item_info">
@@ -86,7 +83,7 @@
           <article class="rmenu">
             <ul>
               <% @products.each_with_index do |product,index| %>
-                  <%if product.category.name== cat.name  and index %2 != 0%>
+                  <%if product.category.id== cat.id  and index %2 != 0%>
                       <li>
 
                         <div class="item_info">
@@ -139,9 +136,9 @@
         </div>
         <div class="dish_info">
           <a href="#">
-            <h2>Fugiat nulla sint</h2>
+            <h2>Shish tawook</h2>
           </a>
-          <h3>$30</h3>
+          <h3>30 LE</h3>
         </div>
         <ul class="rating">
           <li></li>
@@ -158,9 +155,9 @@
         </div>
         <div class="dish_info">
           <a href="#">
-            <h2>Daute irure dolor</h2>
+            <h2>Chineese food</h2>
           </a>
-          <h3>$24</h3>
+          <h3>24 LE</h3>
         </div>
         <ul class="rating">
           <li></li>
@@ -177,9 +174,9 @@
         </div>
         <div class="dish_info">
           <a href="#">
-            <h2>Officia deserunt mollit</h2>
+            <h2>banana dessert </h2>
           </a>
-          <h3>$60</h3>
+          <h3>60 LE</h3>
         </div>
         <ul class="rating">
           <li></li>
@@ -196,9 +193,9 @@
         </div>
         <div class="dish_info">
           <a href="#">
-            <h2>Pim minim veniam</h2>
+            <h2>Vegetable salad</h2>
           </a>
-          <h3>$17</h3>
+          <h3>17 LE</h3>
         </div>
         <ul class="rating">
           <li></li>
@@ -215,9 +212,9 @@
         </div>
         <div class="dish_info">
           <a href="#">
-            <h2>Fugiat nulla sint</h2>
+            <h2>shish tawook</h2>
           </a>
-          <h3>$30</h3>
+          <h3>30 LE</h3>
         </div>
         <ul class="rating">
           <li></li>
@@ -234,9 +231,9 @@
         </div>
         <div class="dish_info">
           <a href="#">
-            <h2>Daute irure dolor</h2>
+            <h2>Chineese food<</h2>
           </a>
-          <h3>$24</h3>
+          <h3>24 LE</h3>
         </div>
         <ul class="rating">
           <li></li>
@@ -253,9 +250,9 @@
         </div>
         <div class="dish_info">
           <a href="#">
-            <h2>Officia deserunt mollit</h2>
+            <h2>Banana Dessert</h2>
           </a>
-          <h3>$60</h3>
+          <h3>60 LE</h3>
         </div>
         <ul class="rating">
           <li></li>
@@ -272,9 +269,9 @@
         </div>
         <div class="dish_info">
           <a href="#">
-            <h2>Pim minim veniam</h2>
+            <h2>Vegetable salad</h2>
           </a>
-          <h3>$17</h3>
+          <h3>17 LE</h3>
         </div>
         <ul class="rating">
           <li></li>
@@ -291,9 +288,9 @@
         </div>
         <div class="dish_info">
           <a href="#">
-            <h2>Fugiat nulla sint</h2>
+            <h2>shish tawook</h2>
           </a>
-          <h3>$30</h3>
+          <h3>30 LE</h3>
         </div>
         <ul class="rating">
           <li></li>
@@ -310,9 +307,9 @@
         </div>
         <div class="dish_info">
           <a href="#">
-            <h2>Daute irure dolor</h2>
+            <h2>Chineese food</h2>
           </a>
-          <h3>$24</h3>
+          <h3>24 LE</h3>
         </div>
         <ul class="rating">
           <li></li>
@@ -329,9 +326,9 @@
         </div>
         <div class="dish_info">
           <a href="#">
-            <h2>Officia deserunt mollit</h2>
+            <h2>banana dessert</h2>
           </a>
-          <h3>$60</h3>
+          <h3>60 LE</h3>
         </div>
         <ul class="rating">
           <li></li>
@@ -348,9 +345,9 @@
         </div>
         <div class="dish_info">
           <a href="#">
-            <h2>Pim minim veniam</h2>
+            <h2>Vegetable salad</h2>
           </a>
-          <h3>$17</h3>
+          <h3>17 LE</h3>
         </div>
         <ul class="rating">
           <li></li>

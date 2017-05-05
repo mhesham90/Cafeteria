@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503130458) do
+ActiveRecord::Schema.define(version: 20170505084918) do
 
   create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -19,13 +19,13 @@ ActiveRecord::Schema.define(version: 20170503130458) do
   end
 
   create_table "orderdetails", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "user_id"
     t.integer  "product_id"
     t.integer  "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "order_id"
+    t.index ["order_id"], name: "index_orderdetails_on_order_id", using: :btree
     t.index ["product_id"], name: "index_orderdetails_on_product_id", using: :btree
-    t.index ["user_id"], name: "index_orderdetails_on_user_id", using: :btree
   end
 
   create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(version: 20170503130458) do
     t.index ["room_id"], name: "index_users_on_room_id", using: :btree
   end
 
+  add_foreign_key "orderdetails", "orders"
   add_foreign_key "orderdetails", "products"
-  add_foreign_key "orderdetails", "users"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
   add_foreign_key "users", "rooms"

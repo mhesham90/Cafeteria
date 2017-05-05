@@ -1,5 +1,4 @@
 
-<style>
 
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700);
 * {
@@ -111,7 +110,7 @@ body {
 }
 
 .no-js .accordionItem.is-collapsed {
-    max-height: auto;
+    max-height: 100%;
 }
 
 .animateIn {

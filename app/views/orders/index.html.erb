@@ -43,8 +43,9 @@
 
                     <th>Status</th>
                     <th>order time</th>
+
+                    <th>items </th>
                     <th>total</th>
-                    <th>items</th>
                     <th></th>
 
 
@@ -63,13 +64,20 @@
                       <td>finished</td>
                   <% end %>
                   <td><%= order.created_at %></td>
-                  <td><%= order.status %></td>
-
-                  <td><%= order.products %></td>
 
 
+
+
+                  <td>
+                  <% order.products.each do |product| %>
+                        <%= product.name %> <br/>
+                  <%end%>
+                    </td>
+
+
+                  <td><%= order.products.sum(:price)%></td>
                   <% if order.status==0 %>
-                      <td><<%= link_to 'cancel', order, method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" %>
+                      <td><%= link_to 'cancel', order, method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" %>
 
                       </td>
                   <% end %>

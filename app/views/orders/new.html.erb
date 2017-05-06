@@ -84,7 +84,7 @@
 
                               <div style="text-align: left">
                                 <% if product.avatar.present? %>
-                                    <%= image_tag product.avatar.url, class: "img-thumbnail", style: "width:50px" %>
+                                    <%= image_tag product.avatar.url , onclick: "addProductToOrder("+(product.id).to_s+")" , class: "img-thumbnail", style: "width:50px" %>
                                 <% end %>
                                 <%= product.name %>
                                 <label> <%= product.price %>  </label>LE
@@ -289,6 +289,9 @@
 
     function addProductToOrder(id) {
         var product = productsMap.get(id);
+        if(!product){
+            return ;
+        }
         if (order_products.get(id)) {
             var oldQuantity = order_products.get(id).quantity;
             product.quantity = oldQuantity + 1;

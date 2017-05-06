@@ -310,8 +310,7 @@
     function checkOut() {
         var order = {};
 
-        notifyMe("we take your order")
-        
+
         order.notes = "" + document.getElementById("notes").value;
         order.orderdetails = [];
 
@@ -326,16 +325,25 @@
             })
         }
 
-        order.products = productsMap;
+        // order.products = productsMap;
         $.ajax({
             type: "POST",
             url: "/orders.json",
-            data:{"order":order},
-            dataType:'json',
+            data: { "order": order },
+            dataType: 'json',
             context: document.body,
             success: function (data) {
-              console.log('succes');
-              console.log(data);
+                console.log('succes');
+                console.log(data);
+                notifyMe("we take your order")
+                if (data == 0) {
+                    window.location = "/orders";
+                }
+                else {
+                    order_products = new Map();
+                    drawOrder();
+                    document.getElementById("notes").value = "";
+                }
             }
         });
 
@@ -344,9 +352,9 @@
 
 
 
-    function notifyMe(message , body) {
+    function notifyMe(message) {
         var options = {
-            body: body | "",
+            // body: body | "",
             icon: "https://res.cloudinary.com/cafeteria/image/upload/v1/products/1/medium/images.jpg"
         }
         // Let's check if the browser supports notifications
@@ -358,7 +366,7 @@
         else if (Notification.permission === "granted") {
             // If it's okay let's create a notification
 
-            var notification = new Notification(message ,options);
+            var notification = new Notification(message, options);
         }
 
         // Otherwise, we need to ask the user for permission
@@ -366,7 +374,7 @@
             Notification.requestPermission(function (permission) {
                 // If the user accepts, let's create a notification
                 if (permission === "granted") {
-                    var notification = new Notification(message,options);
+                    var notification = new Notification(message, options);
                 }
             });
         }

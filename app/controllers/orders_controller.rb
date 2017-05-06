@@ -46,7 +46,7 @@ class OrdersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-      puts "hi :: "
+      puts current_user.admin == '1'
       # ar = JSON.parse(params[:order])
       @order = Order.new()
       user = current_user
@@ -63,39 +63,22 @@ class OrdersController < ApplicationController
         @orderdetails.save
       end
 
-      #  params[:order].each do |o|
-      #         if o.kind_of?(Array)
-      #             o.each do |p|
-      #               puts p
-      #               puts "go"
-      #             end
-      #         else
-      #           puts o
-      #           puts "else"
-      #         end
-      #    end
-
-
-    #  data = JSON.parse(order_params)
-
-    #    puts  data
-      # if current_user.admin == 0 
-      #   get user from request
-      #  else 
-      #   get user from session
       
     respond_to do |format|
       if @order.save
         if request.xhr?
-          format.json  { render :json => :ok, :status => :ok }
+          format.json  { render :json => current_user.admin == '1' ? 1 : 0 , :status => :ok }
         else
           format.html { redirect_to @order, notice: 'Order was successfully created.' }
           format.json { render json: p, status: :created, location: @order }
         end
       else
-        puts "errrrro"
-        format.html { render :new }
-        format.json { render json: order_params, status: :unprocessable_entity }
+        if request.xhr?
+          format.json  { render :json => "error", :status => :error }
+        else
+          format.html { render :new }
+          format.json { render json: order_params, status: :unprocessable_entity }
+        end
       end
     end
   end

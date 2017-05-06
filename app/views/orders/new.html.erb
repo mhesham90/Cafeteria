@@ -55,7 +55,8 @@
                   Total:<label id="total">0</label>
 
 
-                  <button class="btn btn-default glyphicon glyphicon-ok"> Order</Button>
+
+                  <button id="btn_checkout" onclick="checkOut()" class="btn btn-default glyphicon glyphicon-ok"> Order</Button>
                 </div>
               </div>
             </div>
@@ -165,6 +166,9 @@
         productsMap.set(obj.id, obj);
     });
 
+    var btn_checkout = document.getElementById("btn_checkout");
+    btn_checkout.disabled = true;
+
     var products_div = document.getElementById("tab-content");
     function drawProducts() {
         categories.forEach(function (category) {
@@ -246,6 +250,7 @@
     function removeProductFromOrder(id) {
         order_products.delete(id)
         drawOrder();
+        btn_checkout.disabled = (order_products.size>0)?false:true;
     }
 
     function removeProduct(id) {
@@ -261,7 +266,7 @@
 
     function changeQuantity(id, operand) {
         var product = order_products.get(id);
-        if (product.quantity < 1 && operand == '-')
+        if (product.quantity <= 1 && operand == '-')
             return;
         product.quantity = (operand == "+") ? product.quantity + 1 : product.quantity - 1;
 
@@ -272,7 +277,7 @@
 
     function setQuantity(id, quantity) {
 
-        if (isNaN(quantity) || quantity < 0)
+        if (isNaN(quantity) || quantity < 1)
             return;
         var product = order_products.get(id);
         product.quantity = quantity;
@@ -296,6 +301,8 @@
         // products[0].quantity=(products[0].quantity)?products[0].quantity+1:1
         // order_products.push (products[0])
         drawOrder()
+        btn_checkout.disabled = (order_products.size>0)?false:true;
+
     }
     $(function () {
 
@@ -304,6 +311,8 @@
 
     function checkOut() {
         var order = {};
+
+
         order.notes = "" + document.getElementById("notes").value;
         order.orderdetails = [];
 
@@ -318,16 +327,25 @@
             })
         }
 
-        order.products = productsMap;
+        // order.products = productsMap;
         $.ajax({
             type: "POST",
             url: "/orders.json",
-            data:{"order":order},
-            dataType:'json',
+            data: { "order": order },
+            dataType: 'json',
             context: document.body,
             success: function (data) {
-              console.log('succes');
-              console.log(data);
+                console.log('succes');
+                console.log(data);
+                notifyMe("we take your order")
+                if (data == 0) {
+                    window.location = "/orders";
+                }
+                else {
+                    order_products = new Map();
+                    drawOrder();
+                    document.getElementById("notes").value = "";
+                }
             }
         });
 
@@ -336,10 +354,10 @@
 
 
 
-    function notifyMe(message , body) {
+    function notifyMe(message) {
         var options = {
-            body: body | "",
-            icon: "https://res.cloudinary.com/cafeteria/image/upload/v1/products/1/medium/images.jpg"
+            // body: body | "",
+            icon: "https://cafeteriaitios.herokuapp.com/img/logo2.png"
         }
         // Let's check if the browser supports notifications
         if (!("Notification" in window)) {
@@ -350,7 +368,7 @@
         else if (Notification.permission === "granted") {
             // If it's okay let's create a notification
 
-            var notification = new Notification(message ,options);
+            var notification = new Notification(message, options);
         }
 
         // Otherwise, we need to ask the user for permission
@@ -358,7 +376,7 @@
             Notification.requestPermission(function (permission) {
                 // If the user accepts, let's create a notification
                 if (permission === "granted") {
-                    var notification = new Notification(message,options);
+                    var notification = new Notification(message, options);
                 }
             });
         }

@@ -45,7 +45,7 @@
           <h2>The Menu</h2>
           <ul class="nav nav-tabs">
             <% @categories.each_with_index do |cat,index| %>
-              <li class="<%= 'active' if index==0%>"><a data-toggle="tab" href=#<%=c at.id%> style="color:black"> <%=cat.name%></a></li>
+              <li class="<%= 'active' if index==0%>"><a data-toggle="tab" href=#<%=cat.id%> style="color:black"> <%=cat.name%></a></li>
               <%end%>
 
           </ul>

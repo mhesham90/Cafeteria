@@ -330,13 +330,12 @@
         $.ajax({
             type: "POST",
             url: "/orders.json",
-            data: { "order": order },
-            dataType: JSON,
+            data:{"order":order},
+            dataType:'json',
             context: document.body,
             success: function (data) {
-
-            notifyMe("we take your order")
-
+              console.log('succes');
+              console.log(data);
             }
         });
 

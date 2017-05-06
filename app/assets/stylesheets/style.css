@@ -601,7 +601,7 @@ iframe {
 label {
 	font-size: 22px;
 	font-family: 'Lobster13Regular', cursive;
-	color: #9c5959;
+	color: #F05B4C;
 	text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
 	font-weight: normal;
 	padding-bottom: 10px;
@@ -610,7 +610,7 @@ label {
 input[type="text"], textarea {
 	outline: none;
 	background: #f5f0e0;
-	border: 1px dotted #9C5959;
+	border: 1px dotted #F05B4C;
 	font-size: 14px;
 	padding: 3px;
 }
@@ -622,10 +622,10 @@ textarea {
 	height: 200px;
 }
 input[type="text"]:active, input[type="text"]:focus {
-	border: 1px dashed #9C5959;
+	border: 1px dashed  #F05B4C;
 }
 textarea:active, textarea:focus {
-	border: 1px dashed #9C5959;
+	border: 1px dashed  #F05B4C;
 }
 /**
  * Remake of "HTML + CSS3 Icons" by Clay Cauley

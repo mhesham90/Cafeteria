@@ -1,12 +1,9 @@
 <head>
   <meta charset="UTF-8">
-  <title>CSS Responsive animated Accordion</title>
+  <title>My Orders</title>
   <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="/css/reset.css">
-  <link rel="stylesheet" type="text/css" href="/css/main.css">
   <link rel="stylesheet" type="text/css" href="/css/orderlist.css">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
 
@@ -44,10 +41,10 @@
                     <th>Status</th>
                     <th>order time</th>
 
-                    <th>items </th>
+                    <th>items</th>
                     <th>total</th>
                     <th></th>
-
+                    <th></th>
 
                   </tr>
                   </thead>
@@ -61,25 +58,28 @@
                   <% elsif order.status==2 %>
                       <td>out for delivery</td>
                   <% elsif order.status==3 %>
-                      <td>finished</td>
+                      <td>cancelled</td>
                   <% end %>
                   <td><%= order.created_at %></td>
 
 
-
-
                   <td>
-                  <% order.products.each do |product| %>
-                        <%= product.name %> <br/>
-                  <%end%>
-                    </td>
+                    <% order.orderdetails.each do |prod| %>
+
+                        <%= prod.product.name %>
+                        (<label><%= prod.quantity %> * <%= prod.product.price %> LE</label> ) <br/>
+                    <% end %>
+                  </td>
 
 
-                  <td><%= order.products.sum(:price)%></td>
+                  <td><%= order.total %> LE</td>
                   <% if order.status==0 %>
-                      <td><%= link_to 'cancel', order, method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" %>
+                      <%= form_for :orders, :html => {:class => "form-horizontal center"}, url: order_path(order.id), method: :patch do |f| %>
+                          <%= f.text_field :status, class: "hidden", value: "2" %>
+                          <td><%= f.submit "Cancel", class: "btn btn-default ", class: "btn btn-default" %>
 
-                      </td>
+                          </td>
+                      <% end %>
                   <% end %>
 
                   </tr>
@@ -104,63 +104,63 @@
 </html>
 
 <script>
-    $('document').ready(function(){
-    var d = document,
-        accordionToggles = d.querySelectorAll('.js-accordionTrigger'),
-        setAria,
-        setAccordionAria,
-        switchAccordion,
-        touchSupported = ('ontouchstart' in window),
-        pointerSupported = ('pointerdown' in window);
+    $('document').ready(function () {
+        var d = document,
+            accordionToggles = d.querySelectorAll('.js-accordionTrigger'),
+            setAria,
+            setAccordionAria,
+            switchAccordion,
+            touchSupported = ('ontouchstart' in window),
+            pointerSupported = ('pointerdown' in window);
 
-    skipClickDelay = function(e){
-        e.preventDefault();
-        e.target.click();
-    }
-
-    setAriaAttr = function(el, ariaType, newProperty){
-        el.setAttribute(ariaType, newProperty);
-    };
-    setAccordionAria = function(el1, el2, expanded){
-        switch(expanded) {
-            case "true":
-                setAriaAttr(el1, 'aria-expanded', 'true');
-                setAriaAttr(el2, 'aria-hidden', 'false');
-                break;
-            case "false":
-                setAriaAttr(el1, 'aria-expanded', 'false');
-                setAriaAttr(el2, 'aria-hidden', 'true');
-                break;
-            default:
-                break;
+        skipClickDelay = function (e) {
+            e.preventDefault();
+            e.target.click();
         }
-    };
+
+        setAriaAttr = function (el, ariaType, newProperty) {
+            el.setAttribute(ariaType, newProperty);
+        };
+        setAccordionAria = function (el1, el2, expanded) {
+            switch (expanded) {
+                case "true":
+                    setAriaAttr(el1, 'aria-expanded', 'true');
+                    setAriaAttr(el2, 'aria-hidden', 'false');
+                    break;
+                case "false":
+                    setAriaAttr(el1, 'aria-expanded', 'false');
+                    setAriaAttr(el2, 'aria-hidden', 'true');
+                    break;
+                default:
+                    break;
+            }
+        };
 //function
-    switchAccordion = function(e) {
-        console.log("triggered");
-        e.preventDefault();
-        var thisAnswer = e.target.parentNode.nextElementSibling;
-        var thisQuestion = e.target;
-        if(thisAnswer.classList.contains('is-collapsed')) {
-            setAccordionAria(thisQuestion, thisAnswer, 'true');
-        } else {
-            setAccordionAria(thisQuestion, thisAnswer, 'false');
-        }
-        thisQuestion.classList.toggle('is-collapsed');
-        thisQuestion.classList.toggle('is-expanded');
-        thisAnswer.classList.toggle('is-collapsed');
-        thisAnswer.classList.toggle('is-expanded');
+        switchAccordion = function (e) {
 
-        thisAnswer.classList.toggle('animateIn');
-    };
-    for (var i=0,len=accordionToggles.length; i<len; i++) {
-        if(touchSupported) {
-            accordionToggles[i].addEventListener('touchstart', skipClickDelay, false);
+            e.preventDefault();
+            var thisAnswer = e.target.parentNode.nextElementSibling;
+            var thisQuestion = e.target;
+            if (thisAnswer.classList.contains('is-collapsed')) {
+                setAccordionAria(thisQuestion, thisAnswer, 'true');
+            } else {
+                setAccordionAria(thisQuestion, thisAnswer, 'false');
+            }
+            thisQuestion.classList.toggle('is-collapsed');
+            thisQuestion.classList.toggle('is-expanded');
+            thisAnswer.classList.toggle('is-collapsed');
+            thisAnswer.classList.toggle('is-expanded');
+
+            thisAnswer.classList.toggle('animateIn');
+        };
+        for (var i = 0, len = accordionToggles.length; i < len; i++) {
+            if (touchSupported) {
+                accordionToggles[i].addEventListener('touchstart', skipClickDelay, false);
+            }
+            if (pointerSupported) {
+                accordionToggles[i].addEventListener('pointerdown', skipClickDelay, false);
+            }
+            accordionToggles[i].addEventListener('click', switchAccordion, false);
         }
-        if(pointerSupported){
-            accordionToggles[i].addEventListener('pointerdown', skipClickDelay, false);
-        }
-        accordionToggles[i].addEventListener('click', switchAccordion, false);
-    }
-});
+    });
 </script>

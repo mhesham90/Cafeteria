@@ -4,9 +4,7 @@
 <% end %>
 <style>
   .setwidth {
-
     width: 20%;
-
     padding: 5px;
     margin: 8px 0;
     display: inline-block;
@@ -16,20 +14,15 @@
     margin-right: 2%;
     margin-left: 2%;
   }
-
   .btn {
     margin-right: 2%;
   }
-
   img:not(.logo) {
-
     margin-top: 2%;
     width: 50px
   }
-
   .auto {
     display: block;
-
     padding: 5px;
     margin-top: 5px;
     width: 100%;
@@ -42,16 +35,15 @@
   <div class="col-md-1"></div>
 
   <div class="col-md-10">
+
     <div class="panel panel-default">
       <section class="menu">
         <div class="menu_title" id="mainmenu">
           <h2>Order </h2>
 
-
           <div class="panel-body">
             <div class="col-md-5">
               <div class="panel panel-default">
-
 
                 <label for="" class="label-control  "> <span class="glyphicon glyphicon-shopping-cart"></span><u>Order
                   Details</u></label>
@@ -59,12 +51,12 @@
                 </div>
                 <div>
                   <label for="" class="label-control glyphicon glyphicon-edit ">notes</label>
-                  <input id="notes" type="text" class="form-control" style=" width:100%"> Total:
+                  <input type="text" class="form-control" style=" width:100%">
 
-                  <label id="total">0</label>
+                  Total:<label id="total">0</label>
 
 
-                  <button onclick="checkOut()" class="btn btn-default glyphicon glyphicon-ok"> Order</Button>
+                  <button id="btn_checkout" onclick="checkOut()" class="btn btn-default glyphicon glyphicon-ok"> Order</Button>
                 </div>
               </div>
             </div>
@@ -74,10 +66,10 @@
                     <div class="panel-body">
                       <label> <u>Choose Customer to Order for </u></label>
 
-                      <select id="users_lis" class="form-control">
+                      <select class="form-control">
                         <% @users.each do |user| %>
                             <option value="
-                              <%= user.id %>"><%= user.first_name + " " +user.last_name %></option>
+                              <% user.id %>"><%= user.first_name + " " +user.last_name %></option>
                         <% end %>
                       </select>
                     </div>
@@ -85,24 +77,24 @@
 
                   <% if current_user.orders.last %>
                       <div class="panel panel-default">
-
+                        <label><u>Latest Order</u></label>
                         <div class="panel-body">
+
                           <% current_user.orders.last.products.each do |product| %>
-                              <label><u>Latest Order</u></label>
+
                               <div style="text-align: left">
-
+                                <% if product.avatar.present? %>
+                                    <%= image_tag product.avatar.url, class: "img-thumbnail", style: "width:50px" %>
+                                <% end %>
                                 <%= product.name %>
-                                <%= product.price %> LE
+                                <label> <%= product.price %>  </label>LE
                               </div>
-                              </p>
-                              </div>
-                              </div>
-                              <% if product.avatar.present? %>
-                                  <%= image_tag product.avatar.url, class: "img-thumbnail", onclick: "addProductToOrder("+(product.id).to_s+")", style: "width:150px" %>
-                              <% end %>
-                              </p>
-                          <% end %>
 
+
+
+                          <% end %>
+                        </div>
+                          </div>
                   <% else %>
                       <h1>It's our pleasure to take your first order </h1>
 
@@ -173,6 +165,9 @@
     products.forEach(function (obj) {
         productsMap.set(obj.id, obj);
     });
+
+    var btn_checkout = document.getElementById("btn_checkout");
+    btn_checkout.disabled = true;
 
     var products_div = document.getElementById("tab-content");
     function drawProducts() {
@@ -255,6 +250,7 @@
     function removeProductFromOrder(id) {
         order_products.delete(id)
         drawOrder();
+        btn_checkout.disabled = (order_products.size>0)?false:true;
     }
 
     function removeProduct(id) {
@@ -270,7 +266,7 @@
 
     function changeQuantity(id, operand) {
         var product = order_products.get(id);
-        if (product.quantity < 1 && operand == '-')
+        if (product.quantity <= 1 && operand == '-')
             return;
         product.quantity = (operand == "+") ? product.quantity + 1 : product.quantity - 1;
 
@@ -281,7 +277,7 @@
 
     function setQuantity(id, quantity) {
 
-        if (isNaN(quantity) || quantity < 0)
+        if (isNaN(quantity) || quantity < 1)
             return;
         var product = order_products.get(id);
         product.quantity = quantity;
@@ -305,6 +301,8 @@
         // products[0].quantity=(products[0].quantity)?products[0].quantity+1:1
         // order_products.push (products[0])
         drawOrder()
+        btn_checkout.disabled = (order_products.size>0)?false:true;
+
     }
     $(function () {
 
@@ -313,6 +311,8 @@
 
     function checkOut() {
         var order = {};
+
+
         order.notes = "" + document.getElementById("notes").value;
         order.orderdetails = [];
 
@@ -327,26 +327,37 @@
             })
         }
 
-        order.products = productsMap;
+        // order.products = productsMap;
         $.ajax({
             type: "POST",
             url: "/orders.json",
-            data: {"order": order},
+            data: { "order": order },
             dataType: 'json',
             context: document.body,
             success: function (data) {
                 console.log('succes');
                 console.log(data);
+                notifyMe("we take your order")
+                if (data == 0) {
+                    window.location = "/orders";
+                }
+                else {
+                    order_products = new Map();
+                    drawOrder();
+                    document.getElementById("notes").value = "";
+                }
             }
         });
 
     }
 
 
-    function notifyMe(message, body) {
+
+
+    function notifyMe(message) {
         var options = {
-            body: body | "",
-            icon: "https://res.cloudinary.com/cafeteria/image/upload/v1/products/1/medium/images.jpg"
+            // body: body | "",
+            icon: "https://cafeteriaitios.herokuapp.com/img/logo2.png"
         }
         // Let's check if the browser supports notifications
         if (!("Notification" in window)) {

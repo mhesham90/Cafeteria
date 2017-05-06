@@ -21,6 +21,8 @@
             <th>Date</th>
             <th>Name</th>
             <th>room</th>
+
+            <th>Notes</th>
             <th>total</th>
             <th></th>
           </tr>
@@ -34,6 +36,7 @@
                         <td><%= order.created_at %></td>
                         <td><%= order.user.first_name %></td>
                         <td><%= order.user.room.name %></td>
+                        <td><%= order.notes %></td>
                         <td><%= order.total %></td>
                         <td>
                           <%= form_for(order) do |f| %>
@@ -49,18 +52,18 @@
                         </td>
                       </tr>
                       <tr>
-                        <td colspan="5">
+                        <td colspan="7">
                           <div id="<%= order.id %>" class="collapse">
 
                             <% order.orderdetails.each do |x| %>
                                 <div class="col-md-6">
                                   <div class="card">
                                     <%= image_tag x.product.avatar.url, class: "img-fluid", style: "" %>
-                                    <div class="card-block">
+                                    <div class="card-block" >
                                       <h3 class="card-title"><%= x.product.name %></h3>
                                       <hr/>
-                                      <p class="card-text"><B>price : </B> <label> <%= x.product.price %> </label> LE
-                                        <B style=" padding-left:5%">Quantity : </B> <label><%= x.quantity %> </label>
+                                      <p class="card-text" style="text-align: left"><B>price : </B> <label> <%= x.product.price %> </label> LE
+                                        <B style=" padding-left:2%">Quantity : </B> <label><%= x.quantity %> </label>
                                     </div>
                                   </div>
                                 </div>

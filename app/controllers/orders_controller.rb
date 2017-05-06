@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
      if current_user.admin == '1' 
          render "checks"  # checks
      else
-       @orders = Order.all
+       @orders =Order.order("id DESC").all
         render "index"
      end
   end

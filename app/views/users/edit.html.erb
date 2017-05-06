@@ -24,7 +24,7 @@
 
         <%= f.label :admin  , class: "control-label"%>
         <%= f.check_box :admin ,class: "checkbox-inline form-control" ,style:"width:50%"%><hr/>
-        <% if @user.avatar.exists?%>
+        <% if @user.avatar.present?%>
         <%= image_tag @user.avatar.url , class:"img-thumbnail" ,style:"width:150px" %>
         <%end%>
             <div>

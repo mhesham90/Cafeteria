@@ -56,7 +56,7 @@ class OrdersController < ApplicationController
           @order.user = user
       end 
       @order.notes = params[:order]['notes']
-      @order.status = 1;
+      @order.status = 0
       params[:order]['orderdetails'].each do |k,v|
         puts k
         @orderdetails = @order.orderdetails.build(:product => Product.find(v['product_id']) ,:quantity => v['quantity'])
@@ -86,8 +86,12 @@ class OrdersController < ApplicationController
       
     respond_to do |format|
       if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render json: p, status: :created, location: @order }
+        if request.xhr?
+          format.json  { render :json => :ok, :status => :ok }
+        else
+          format.html { redirect_to @order, notice: 'Order was successfully created.' }
+          format.json { render json: p, status: :created, location: @order }
+        end
       else
         puts "errrrro"
         format.html { render :new }

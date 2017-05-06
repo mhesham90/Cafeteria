@@ -11,7 +11,9 @@
   <link rel="stylesheet" type="text/css" href="/css/main.css">
   <script type="text/javascript" src="/javascripts/easing.js"></script>
   <script type="text/javascript" src="/javascripts/main.js"></script>
-
+  <% content_for :head do %>
+      <%= javascript_include_tag "channels/products" %>
+  <% end %>
 </head>
 
 <body>
@@ -65,8 +67,11 @@
 
                           <div class="item_info">
 
-                            <h3 class="item_name">
+                            <h3 class="item_name" id="product_<%=product.id %>">
                               <%=product.name %>
+                            </h3>
+                            <h3 style="color: red; display: <%= 'none' if product.status == 1 %>" id="unavailable<%= product.id.to_s%>">
+                              (unavailable)
                             </h3>
 
                           </div>
@@ -91,10 +96,12 @@
 
                           <div class="item_info">
 
-                            <h3 class="item_name">
+                            <h3 class="item_name" id="product_<%=product.id %>">
                               <%=product.name %>
                             </h3>
-
+                            <h3 style="color: red; display: <%= 'none' if product.status == 1 %>" id="unavailable<%= product.id.to_s%>">
+                              (unavailable)
+                            </h3>
                           </div>
                           <h4 class="price">
                             <%=product.price%> LE</h4>

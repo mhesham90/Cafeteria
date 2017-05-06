@@ -5,7 +5,7 @@ class OrderRelayJob < ApplicationJob
   def perform(order,id)
     data = {}
     data['order'] = order
-    data['status'] = 'update'
-    ActionCable.server.broadcast "orders:#{id}", data: data
+    data['type'] = 'update'
+    ActionCable.server.broadcast "orders:#{id}", data
   end
 end

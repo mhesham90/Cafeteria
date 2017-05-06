@@ -39,6 +39,9 @@ App.orders = App.cable.subscriptions.create("OrdersChannel", {
           html+= '</div></td></tr>';
           $('tbody').prepend(html);
       }
+      else if (data.type === 'update') {
+
+      }
       else if (data.type === 'cancel') {
           var btn = '<button class="btn btn-danger cancelOrd">order canceled X</button>';
           $('form#edit_order_'+order.id).replaceWith(btn);

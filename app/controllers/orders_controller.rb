@@ -91,7 +91,7 @@ class OrdersController < ApplicationController
       else
         puts "errrrro"
         format.html { render :new }
-        format.json { render json: order_params, status: :created }
+        format.json { render json: order_params, status: :unprocessable_entity }
       end
     end
   end

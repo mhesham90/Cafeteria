@@ -309,6 +309,9 @@
 
     function checkOut() {
         var order = {};
+
+        notifyMe("we take your order")
+        
         order.notes = "" + document.getElementById("notes").value;
         order.orderdetails = [];
 

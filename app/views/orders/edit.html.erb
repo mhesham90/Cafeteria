@@ -8,7 +8,6 @@
 <!--<script type="text/javascript" src="/javascripts/channels/orders"></script>-->
 
 <div class="col-md-6">
-  <button id="helper">helper</button>
   <section class="menu">
     <div class="menu_title" id="mainmenu">
       <h2>Orders</h2>
@@ -27,10 +26,9 @@
           </tr>
           </thead>
 
-
+          <tbody>
           <% @orders.order(created_at: :desc).each do |order| %>
-              <%= form_for(order) do |f| %>
-                  <tbody>
+
                   <% if order.status==0 or order.status==1 %>
                       <tr data-toggle="collapse" data-target="#<%= order.id %>" class="clickable">
                         <td><%= order.created_at %></td>
@@ -38,13 +36,16 @@
                         <td><%= order.user.room.name %></td>
                         <td><%= order.total %></td>
                         <td>
+                          <%= form_for(order) do |f| %>
                           <% if order.status==0 %>
-                              <%= f.submit 'process', class: "btn btn-default" %>
+                              <%= f.submit 'process', class: "btn btn-info" %>
                               <%= f.number_field :status, class: "hidden", style: "width:100%", value: 1 %>
                           <% else %>
-                              <%= f.submit 'Deliver', class: "btn btn-default" %>
+                              <%= f.submit 'Deliver', class: "btn btn-success" %>
                               <%= f.number_field :status, class: "hidden", style: "width:100%", value: 2 %>
                           <% end %>
+                          <% end %>
+
                         </td>
                       </tr>
                       <tr>
@@ -67,7 +68,6 @@
                           </div>
                         </td>
                       </tr>
-                  <% end %>
               <% end %>
           <% end %>
           </tbody>
@@ -83,57 +83,57 @@
 
 
 <script>
-    $(function () {
-        $('#helper').click(function () {
-//to append main row from order object
-// replace id="3" with order id .. and every #3 with #orderid
-            mainrow = '<tr id="3" >' +
-                '<td> order.created_at        </td> ' +
-                '<td> order.user.first_name   </td>' +
-                '<td> order.user.room.name    </td>' +
-                '<td> order.total             </td>' +
-                '</tr>'
-
-            $('table').prepend(mainrow)
-            $('#3').addClass('clickable collapsed')
-            $("#3").attr("data-toggle", "collapse");
-            $("#3").attr("data-target", "#4");
-
-// if < order.status> ==0 append button process else append deliver
-
-            if (1 == 1) {
-                action_td = '<td> <input type="submit" value="process" class="btn btn-default"> ' +
-                    '<input type="number" hidden value=1> </td>'
-                     $('#3').append(action_td)
-            }
-            else {
-                action_td = '<td> <input type="submit" value="Deliver" class="btn btn-default"> ' +
-                    '<input type="number" hidden value=2> </td>'
-                     $('#3').append(action_td)
-            }
-// append collapse part
-            collapserow = ' <tr>' +
-                '<td colspan="5">' +
-                '<div id=4 class="collapse orderid ">' +
-
-                '</div>'
-// prepare products
-
-            $('table').prepend(collapserow)
-            // should loop on orderdetails to get prodct name ,price ,and quantaty
-            for (i = 0; i < 3; i++) {
-                card = '<div class="col-md-6 " > ' +
-                    '<div class="card">' +
-                    '< image_tag x.product.avatar.url, class: "img-fluid", style: "" >' +
-                    '<div class="card-block">' +
-                    '<h3 class="card-title">< x.product.name ></h3>' +
-                    '<hr/>' +
-                    '<p class="card-text"><B>price : </B> <label> < x.product.price > </label> LE' +
-                    '<B style=" padding-left:5%">Quantity : </B> <label>< x.quantity > </label>' +
-                    '</div> </div>';
-                $('.orderid').append(card)
-            }
-        })
-    })
-
+//    $(function () {
+//        $('#helper').click(function () {
+////to append main row from order object
+//// replace id="3" with order id .. and every #3 with #orderid
+//            mainrow = '<tr id="3" >' +
+//                '<td> order.created_at        </td> ' +
+//                '<td> order.user.first_name   </td>' +
+//                '<td> order.user.room.name    </td>' +
+//                '<td> order.total             </td>' +
+//                '</tr>'
+//
+//            $('table').prepend(mainrow)
+//            $('#3').addClass('clickable collapsed')
+//            $("#3").attr("data-toggle", "collapse");
+//            $("#3").attr("data-target", "#4");
+//
+//// if < order.status> ==0 append button process else append deliver
+//
+//            if (1 == 1) {
+//                action_td = '<td> <input type="submit" value="process" class="btn btn-default"> ' +
+//                    '<input type="number" hidden value=1> </td>'
+//                     $('#3').append(action_td)
+//            }
+//            else {
+//                action_td = '<td> <input type="submit" value="Deliver" class="btn btn-default"> ' +
+//                    '<input type="number" hidden value=2> </td>'
+//                     $('#3').append(action_td)
+//            }
+//// append collapse part
+//            collapserow = ' <tr>' +
+//                '<td colspan="5">' +
+//                '<div id=4 class="collapse orderid ">' +
+//
+//                '</div>'
+//// prepare products
+//
+//            $('table').prepend(collapserow)
+//            // should loop on orderdetails to get prodct name ,price ,and quantaty
+//            for (i = 0; i < 3; i++) {
+//                card = '<div class="col-md-6 " > ' +
+//                    '<div class="card">' +
+//                    '< image_tag x.product.avatar.url, class: "img-fluid", style: "" >' +
+//                    '<div class="card-block">' +
+//                    '<h3 class="card-title">< x.product.name ></h3>' +
+//                    '<hr/>' +
+//                    '<p class="card-text"><B>price : </B> <label> < x.product.price > </label> LE' +
+//                    '<B style=" padding-left:5%">Quantity : </B> <label>< x.quantity > </label>' +
+//                    '</div> </div>';
+//                $('.orderid').append(card)
+//            }
+//        })
+//    })
+//
 </script>

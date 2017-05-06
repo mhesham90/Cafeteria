@@ -9,7 +9,7 @@ App.products = App.cable.subscriptions.create("ProductsChannel",{
 
     received: function(data) {
         var product = JSON.parse(data.product);
-        if ($('title').text() === "order"){
+        if ($('title').text() === "Order"){
             if (data.type === 'create') {
                 addProduct(product);
             }else if (data.type === 'update'){

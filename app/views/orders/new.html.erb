@@ -163,7 +163,9 @@
 
     var productsMap = new Map();
     products.forEach(function (obj) {
-        productsMap.set(obj.id, obj);
+        if(obj.status!==0){
+            productsMap.set(obj.id, obj);
+        }
     });
 
     var btn_checkout = document.getElementById("btn_checkout");

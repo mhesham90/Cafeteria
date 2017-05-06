@@ -41,11 +41,12 @@ App.orders = App.cable.subscriptions.create("OrdersChannel", {
           $('tbody').prepend(html);
       }
       else if (data.type === 'update') {
+          console.log('update')
           if (order.status == 1){
-              $('#table_46>tbody tr :eq(0)').text('processing')
-              $('#table_46>tbody input').remove()
+              $('#table_'+order.id+'>tbody tr :eq(0)').text('processing')
+              $('#table_'+order.id+'>tbody input').remove()
           }else{
-              $('#table_46>tbody tr :eq(0)').text('out for delivery')
+              $('#table_'+order.id+'>tbody tr :eq(0)').text('out for delivery')
           }
       }
       else if (data.type === 'cancel') {

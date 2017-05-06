@@ -14,6 +14,7 @@ App.orders = App.cable.subscriptions.create("OrdersChannel", {
               '<td>'+order.created_at+'</td>'+
               '<td>'+order.user.first_name+'</td>'+
               '<td>'+order.user.room.name+'</td>'+
+              '<td>'+order.notes+'</td>'+
               '<td>'+order.total +'</td>'+
               '<td>' +
               '<form class="edit_order" id="edit_order_'+order.id+'" action="/orders/'+order.id+'" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" >' +
@@ -40,7 +41,12 @@ App.orders = App.cable.subscriptions.create("OrdersChannel", {
           $('tbody').prepend(html);
       }
       else if (data.type === 'update') {
-
+          if (order.status == 1){
+              $('#table_46>tbody tr :eq(0)').text('processing')
+              $('#table_46>tbody input').remove()
+          }else{
+              $('#table_46>tbody tr :eq(0)').text('out for delivery')
+          }
       }
       else if (data.type === 'cancel') {
           var btn = '<button class="btn btn-danger cancelOrd">order canceled X</button>';

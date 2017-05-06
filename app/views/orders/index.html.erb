@@ -1,11 +1,13 @@
 <head>
   <meta charset="UTF-8">
-  <title>My Orders</title>
   <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="/css/orderlist.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-
+  <% content_for :head do %>
+      <title>My Orders</title>
+      <%= javascript_include_tag "channels/orders" %>
+  <% end %>
 
 </head>
 
@@ -34,7 +36,7 @@
                 </a>
               </dt>
               <dd class="accordion-content accordionItem is-collapsed" id="accordion1" aria-hidden="true">
-                <table class="table">
+                <table class="table" id="table_<%= order.id %>">
                   <thead>
                   <tr>
 

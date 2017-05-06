@@ -8,7 +8,38 @@ App.orders = App.cable.subscriptions.create("OrdersChannel", {
   },
 
   received: function(data) {
-    // Called when there's incoming data on the websocket for this channel
-      console.log(data)
+      var order = JSON.parse(data.order);
+      if (data.type === 'cancel') {
+          var html = '<form class="edit_order" id="edit_order_'+order.id+'" action="/orders/'+order.id+'" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" ></form>' +
+              '<input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="'+$('meta[name=csrf-token]').attr('content')+'" />'+
+              '<div></div>'+'<tr data-toggle="collapse" data-target="#'+order.id+'" class="clickable">'+
+              '<td>'+order.created_at+'</td>'+
+              '<td>'+order.user.first_name+'</td>'+
+              '<td>'+order.user.room.name+'</td>'+
+              '<td>'+order.total +'</td>'+
+              '<td>' +
+              '<input type="submit" name="commit" value="process" class="btn btn-default" data-disable-with="process" />' +
+              '<input class="hidden" style="width:100%" value="1" type="number" name="order[status]" id="order_status" />' +
+              '</td>'+
+              '</tr>'+
+              '<tr><td colspan="5">'+
+              '<div id="'+order.id+'" class="collapse">';
+          order.orderdetails.forEach(function(ord){
+                  html+= '<div class="col-md-4">' +
+                      '<div class="panel panel-default">'+
+                      '<div class="panel-heading">'+ord.product.name+'</div>' +
+                      '<div class="panel-body"> ' +
+                      '<img src="https://res.cloudinary.com/cafeteria/image/upload/v1/products/'+ord.product.id+'/thumb/'+ord.product.avatar_file_name+'", class: "img-thumbnail">' +
+                      '</div>' +
+                      '<div class="panel-footer">'+ord.product.price+' LE</div>' +
+                      '</div>' +
+                      '</div>'
+              });
+              
+              html+= '</div></td></tr>';
+              $('tbody').prepend(html);
+      }
+    console.log(data)
+  //    $('meta[name=csrf-token]').attr('content')
   }
 });

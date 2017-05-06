@@ -12,13 +12,13 @@ class Order < ApplicationRecord
   end
 
   after_create ->{
-    OrderCreateJob.perform_now(self)
+    OrderCreateJob.perform_now(self.to_json(:methods => :total,include: {:user=>{include: {:room=>{}}}, :orderdetails=>{include: {:product=>{}} }}))
   }
   after_update_commit ->{
     if self.status == 3
-      OrderChangeJob.perform_now(self)
+      OrderChangeJob.perform_now(self.to_json(:methods => :total,include: {:user=>{include: {:room=>{}}}, :orderdetails=>{include: {:product=>{}} }}))
     else
-      OrderRelayJob.perform_now(self, self.user_id)
+      OrderRelayJob.perform_now(self.to_json(:methods => :total,include: {:user=>{include: {:room=>{}}}, :orderdetails=>{include: {:product=>{}} }}), self.user_id)
     end
   }
 end

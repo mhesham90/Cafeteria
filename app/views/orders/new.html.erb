@@ -1,149 +1,151 @@
 <style>
-  .setwidth {
+    .setwidth {
 
-    width: 20%;
+        width: 20%;
 
-    padding: 5px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-right: 2%;
-    margin-left: 2%;
-  }
+        padding: 5px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-right: 2%;
+        margin-left: 2%;
+    }
 
-  .btn {
-    margin-right: 2%;
-  }
+    .btn {
+        margin-right: 2%;
+    }
 
-  img:not(.logo) {
+    img:not(.logo) {
 
-    margin-top: 2%;
-    width: 50px
-  }
+        margin-top: 2%;
+        width: 50px
+    }
 
-  .auto {
-    display: block;
+    .auto {
+        display: block;
 
-    padding: 5px;
-    margin-top: 5px;
-    width: 100%;
-    height: 300px;
-    overflow: auto;
-  }
+        padding: 5px;
+        margin-top: 5px;
+        width: 100%;
+        height: 300px;
+        overflow: auto;
+    }
 </style>
 <div class="col-md-12">
 
-  <div class="col-md-1"></div>
+    <div class="col-md-1"></div>
 
-  <div class="col-md-10">
-    <div class="panel panel-default">
-      <section class="menu">
-        <div class="menu_title" id="mainmenu">
-          <h2>Order </h2>
-
-
-          <div class="panel-body">
-            <div class="col-md-5">
-              <div class="panel panel-default">
+    <div class="col-md-10">
+        <div class="panel panel-default">
+            <section class="menu">
+                <div class="menu_title" id="mainmenu">
+                    <h2>Order </h2>
 
 
-                <label for="" class="label-control  "> <span class="glyphicon glyphicon-shopping-cart"></span><u>Order
-                  Details</u></label>
-                <div id="order" class="panel-body">
-                </div>
-                <div>
-                  <label for="" class="label-control glyphicon glyphicon-edit ">notes</label>
-                  <input id="notes" type="text" class="form-control" style=" width:100%">
-
-                  Total:<label id="total">0</label>
-
-
-                  <button onclick="checkOut()" class="btn btn-default glyphicon glyphicon-ok"> Order</Button>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-7">
-              <% if current_user.admin=='1' %>
-                  <div class="panel panel-default">
                     <div class="panel-body">
-                      <label> <u>Choose Customer to Order for </u></label>
+                        <div class="col-md-5">
+                            <div class="panel panel-default">
 
-                      <select id="users_lis" class="form-control">
+
+                                <label for="" class="label-control  "> <span class="glyphicon glyphicon-shopping-cart"></span><u>Order
+                  Details</u></label>
+                                <div id="order" class="panel-body">
+                                </div>
+                                <div>
+                                    <label for="" class="label-control glyphicon glyphicon-edit ">notes</label>
+                                    <input id="notes" type="text" class="form-control" style=" width:100%"> Total:
+
+                                    <label id="total">0</label>
+
+
+                                    <button onclick="checkOut()" class="btn btn-default glyphicon glyphicon-ok"> Order</Button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <% if current_user.admin=='1' %>
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <label> <u>Choose Customer to Order for </u></label>
+
+                                        <select id="users_lis" class="form-control">
                         <% @users.each do |user| %>
                             <option value="
                               <%= user.id %>"><%= user.first_name + " " +user.last_name %></option>
                         <% end %>
                       </select>
-                    </div>
-              <% else %>
+                                    </div>
+                                    <% else %>
 
-                  <% if current_user.orders.last %>
-                      <div class="panel panel-default">
+                                        <% if current_user.orders.last %>
+                                            <div class="panel panel-default">
 
-                        <div class="panel-body">
-                          <% current_user.orders.last.products.each do |product| %>
-                              <label><u>Latest Order</u></label>
-                              <div style="text-align: left">
+                                                <div class="panel-body">
+                                                    <% current_user.orders.last.products.each do |product| %>
+                                                        <label><u>Latest Order</u></label>
+                                                        <div style="text-align: left">
 
-                                <%= product.name %>
-                                <%= product.price %> LE
-                              </div>
-                              </p> </div></div>
-                              <% if product.avatar.present? %>
-                                  <%= image_tag product.avatar.url, class: "img-thumbnail", onclick: "addProductToOrder("+(product.id).to_s+")", style: "width:150px" %>
-                              <% end %>
-                              </p>
-                          <% end %>
+                                                            <%= product.name %>
+                                                                <%= product.price %> LE
+                                                        </div>
+                                                        </p>
+                                                </div>
+                                            </div>
+                                            <% if product.avatar.present? %>
+                                                <%= image_tag product.avatar.url, class: "img-thumbnail", onclick: "addProductToOrder("+(product.id).to_s+")", style: "width:150px" %>
+                                                    <% end %>
+                                                        </p>
+                                                        <% end %>
 
-                  <% else %>
-                      <h1>It's our pleasure to take your first order </h1>
+                                                            <% else %>
+                                                                <h1>It's our pleasure to take your first order </h1>
 
-                  <% end %>
-
-
-              <% end %>
-
-              <div class="panel panel-default">
-                <div class="panel-body ">
-                  <div>
-                    <ul class="nav nav-tabs">
-
-                      <% @categories.each_with_index do |category, index| %>
+                                                                <% end %>
 
 
-                          <li class=" <%= 'active' if index==0 %> ">
-                            <a data-toggle="tab" href="#cat-<%= category.id %>">
-                              <%= category.name %>
-                            </a>
-                          </li>
+                                                                    <% end %>
 
-                      <% end %>
-                    </ul>
-                  </div>
-                  <div id="tab-content" class="tab-content  auto ">
+                                                                        <div class="panel panel-default">
+                                                                            <div class="panel-body ">
+                                                                                <div>
+                                                                                    <ul class="nav nav-tabs">
 
-                    <% @categories.each_with_index do |category, index| %>
-                        <div id='cat-<%= category.id %>' class="tab-pane fade in <%= 'active' if index==0 %> " style="text-align: left">
+                                                                                        <% @categories.each_with_index do |category, index| %>
 
+
+                                                                                            <li class=" <%= 'active' if index==0 %> ">
+                                                                                                <a data-toggle="tab" href="#cat-<%= category.id %>">
+                                                                                                    <%= category.name %>
+                                                                                                </a>
+                                                                                            </li>
+
+                                                                                            <% end %>
+                                                                                    </ul>
+                                                                                </div>
+                                                                                <div id="tab-content" class="tab-content  auto ">
+
+                                                                                    <% @categories.each_with_index do |category, index| %>
+                                                                                        <div id='cat-<%= category.id %>' class="tab-pane fade in <%= 'active' if index==0 %> " style="text-align: left">
+
+                                                                                        </div>
+                                                                                        <% end %>
+
+                                                                                </div>
+
+
+                                                                            </div>
+                                                                        </div>
+
+                                </div>
                         </div>
-                    <% end %>
-
-                  </div>
-
-
+                    </div>
                 </div>
-              </div>
-
-              </div>
-            </div>
-          </div>
+            </section>
         </div>
-      </section>
-    </div>
 
-  </div>
+    </div>
 </div>
 </div>
 
@@ -155,14 +157,13 @@
 -->
 
 <script>
-
     var IMAGE_URL = "https://res.cloudinary.com/cafeteria/image/upload/v1/products/";
     var IMAGE_SIZE = "medium";
 
     var products =
-    <%= @products.to_json.html_safe %>
+        <%= @products.to_json.html_safe %>
     var categories =
-    <%= @categories.to_json.html_safe %>
+        <%= @categories.to_json.html_safe %>
 
     var productsMap = new Map();
     products.forEach(function (obj) {
@@ -174,8 +175,8 @@
         categories.forEach(function (category) {
             document.getElementById("cat-" + category.id).innerHTML = "";
         });
-     for (var product of productsMap.values()) {
-            var category_div = document.getElementById("cat-"+product.category_id)
+        for (var product of productsMap.values()) {
+            var category_div = document.getElementById("cat-" + product.category_id)
 
             var product_div = document.createElement("div");
             var product_name = document.createTextNode(product.name);
@@ -241,7 +242,7 @@
         $("button").addClass("btn btn-default")
         $('button:contains("X")').addClass("btn btn-danger")
         $('input[type=number]').addClass("setwidth")
-//        $("input").addClass("form-control")
+        //        $("input").addClass("form-control")
 
         $('label').addClass('form-inline')
 
@@ -306,37 +307,70 @@
 
     })
 
-        function checkOut(){
+    function checkOut() {
         var order = {};
-        order.notes = ""+document.getElementById("notes").value;
+        order.notes = "" + document.getElementById("notes").value;
         order.orderdetails = [];
 
         var e = document.getElementById("users_list");
         if (e)
             order.user_id = e.options[e.selectedIndex].value;
-    
-        for (var product of order_products.values()){
-            order.orderdetails.push( {
-                                "product_id": product.id,
-                                "quantity": product.quantity
-                            })
+
+        for (var product of order_products.values()) {
+            order.orderdetails.push({
+                "product_id": product.id,
+                "quantity": product.quantity
+            })
         }
 
         order.products = productsMap;
         $.ajax({
-            type:"POST",
+            type: "POST",
             url: "/orders.json",
-            data:{"order":order},
-            dataType:JSON,
+            data: { "order": order },
+            dataType: JSON,
             context: document.body,
             success: function (data) {
 
+            notifyMe("we take your order")
 
             }
         });
 
+    }
+
+
+
+
+    function notifyMe(message , body) {
+        var options = {
+            body: body | "",
+            icon: "https://res.cloudinary.com/cafeteria/image/upload/v1/products/1/medium/images.jpg"
+        }
+        // Let's check if the browser supports notifications
+        if (!("Notification" in window)) {
+            alert("This browser does not support desktop notification");
         }
 
-        
+        // Let's check whether notification permissions have already been granted
+        else if (Notification.permission === "granted") {
+            // If it's okay let's create a notification
+
+            var notification = new Notification(message ,options);
+        }
+
+        // Otherwise, we need to ask the user for permission
+        else if (Notification.permission !== "denied") {
+            Notification.requestPermission(function (permission) {
+                // If the user accepts, let's create a notification
+                if (permission === "granted") {
+                    var notification = new Notification(message,options);
+                }
+            });
+        }
+
+        // At last, if the user has denied notifications, and you 
+        // want to be respectful there is no need to bother them any more.
+    }
 
 </script>

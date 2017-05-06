@@ -34,12 +34,14 @@
                             <a href=""><img src="/img/logo2.png" alt="Re" title="" style="margin-top:-46%" class="logo" /></a>
                         </div>
 
-                        <nav>
+                        <nav >
 
                             <ul>
                                 <!--<li><a href="" class="active">r</a></li>-->
                                 <% if user_signed_in? %>
-
+                                  <% if current_user.admin=='0'%>
+                                  <li> <a><label>welcome <%=current_user.first_name%></label></a> </li>
+                                      <%end%>
                                     <li><a href="/">Home</a></li>
                                   <li><a href="/#mainmenu">Menu</a></li>
 
@@ -48,11 +50,12 @@
                                   <li><a href="/orders/new">Order</a></li>
                                     <li><a href="/orders"><%= current_user.admin=='1'?'Checks':'My Orders' %></a></li>
 
-                                  <li><a href="/user/edit">Edit profile</a></li>
+
 
                               <!--if admin-->
 
                                       <% if current_user.admin=='1'%>
+                                      <li><a href="/user/edit">Edit profile</a></li>
                                       <li><a href="/orders/1/edit">Incomming Orders</a></li>
                                        <li class="dropdown">
 

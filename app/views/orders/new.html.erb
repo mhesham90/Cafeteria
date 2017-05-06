@@ -327,11 +327,11 @@
             type:"POST",
             url: "/orders.json",
             data:{"order":order},
-            dataType:JSON,
+            dataType:'json',
             context: document.body,
             success: function (data) {
-
-
+              console.log('succes');
+              console.log(data);
             }
         });
 

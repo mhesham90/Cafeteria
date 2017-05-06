@@ -5,7 +5,7 @@
   <title>The cafeteria</title>
   <meta charset="utf-8">
   <meta name="author" content="pixelhint.com">
-  <meta name="description" content="Resto HTML5/CSS3 Restaurant Home Page website Template"/>
+  <meta name="description" content="Resto HTML5/CSS3 Restaurant Home Page website Template" />
 
 
   <link rel="stylesheet" type="text/css" href="/css/reset.css">
@@ -15,409 +15,416 @@
 </head>
 
 <body>
-<!--  start header  -->
+  <!--  start header  -->
 
 
-<!--  end header  -->
+  <!--  end header  -->
 
-<div>
-<!--  start hero  -->
-<section class="hero" >
-  <div class="caption">
-    <h3>The cafeteria </h3>
-    <h4>
-      <span class="rsep"></span> The cafeteria home page
-      <span class="lsep"></span>
-    </h4>
+  <div>
+    <!--  start hero  -->
+    <section class="hero">
+      <div class="caption">
+        <h3>The cafeteria </h3>
+        <h4>
+          <span class="rsep"></span> The cafeteria home page
+          <span class="lsep"></span>
+        </h4>
 
-  </div>
-</section>
-<!--  end hero  -->
-
-
-<!--  start menu  -->
-
-
-<section class="menu">
-
-  <div class="wrapper">
-    <div class="menu_title" id="mainmenu">
-      <h2>The Menu</h2>
-      <ul class="nav nav-tabs">
-        <% @categories.each_with_index do |cat,index| %>
-        <li class="<%= 'active' if index==0%>"><a data-toggle="tab" href=#<%= cat.id%> style="color:black"> <%=cat.name%></a></li>
-                                    <%end%>
-
-      </ul>
-    </div>
-    <div class="tab-content">
-      <% @categories.each_with_index do |cat,index| %>
-      <div id="<%= cat.id%>" class="tab-pane fade in <%= 'active' if index==0%>">
-        <div class="mean_menu">
-          <!--  left menu row  -->
-
-
-          <article class="lmenu">
-            <ul>
-              <% @products.each_with_index do |product,index2| %>
-                  <%if product.category.id== cat.id  and index2 %2==0%>
-              <li>
-
-                <div class="item_info">
-
-                  <h3 class="item_name"><%=product.name %> </h3>
-
-                </div>
-                <h4 class="price"><%=product.price%> LE</h4>
-                <span class="separator"></span>
-              </li>
-                               <%end%>
-                               <%end%>
-
-
-
-            </ul>
-          </article>
-
-          <!--  right menu row  -->
-          <article class="rmenu">
-            <ul>
-              <% @products.each_with_index do |product,index| %>
-                  <%if product.category.id== cat.id  and index %2 != 0%>
-                      <li>
-
-                        <div class="item_info">
-
-                          <h3 class="item_name"><%=product.name %> </h3>
-
-                        </div>
-                        <h4 class="price"><%=product.price%> LE</h4>
-                        <span class="separator"></span>
-                      </li>
-<%end%>
-                      <%end%>
-            </ul>
-          </article>
-        </div>
-
-        <!--  hidden menu items  -->
-
-
-      </div>
-
-      <%end%>
-</div>
-
-  </div>
-
-</section>
-<!--  end menu  -->
-</div>
-</div>
-
-
-<!--  start featured dishes  -->
-<section class="featured_dishes">
-  <div class="wrapper">
-    <section class="info">
-      <div class="title">
-        <h3>Featured Dishes</h3>
-        <span class="separator"></span>
-      </div>
-      <div class="slider_nav" id="slider_nav">
-      </div>
-    </section>.....
-
-    <section class="dishes" id="dishes">
-
-      <article>
-        <div class="dishe_img">
-          <a href="#"><img src="/img/dish1.jpg" alt="" title=""/></a>
-        </div>
-        <div class="dish_info">
-          <a href="#">
-            <h2>Shish tawook</h2>
-          </a>
-          <h3>30 LE</h3>
-        </div>
-        <ul class="rating">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li class="no-star"></li>
-        </ul>
-      </article>
-
-      <article>
-        <div class="dishe_img">
-          <a href="#"><img src="/img/dish2.jpg" alt="" title=""/></a>
-        </div>
-        <div class="dish_info">
-          <a href="#">
-            <h2>Chineese food</h2>
-          </a>
-          <h3>24 LE</h3>
-        </div>
-        <ul class="rating">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li class="no-star"></li>
-          <li class="no-star"></li>
-        </ul>
-      </article>
-
-      <article>
-        <div class="dishe_img">
-          <a href="#"><img src="/img/dish3.jpg" alt="" title=""/></a>
-        </div>
-        <div class="dish_info">
-          <a href="#">
-            <h2>banana dessert </h2>
-          </a>
-          <h3>60 LE</h3>
-        </div>
-        <ul class="rating">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </article>
-
-      <article>
-        <div class="dishe_img">
-          <a href="#"><img src="/img/dish4.jpg" alt="" title=""/></a>
-        </div>
-        <div class="dish_info">
-          <a href="#">
-            <h2>Vegetable salad</h2>
-          </a>
-          <h3>17 LE</h3>
-        </div>
-        <ul class="rating">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li class="no-star"></li>
-        </ul>
-      </article>
-
-      <article>
-        <div class="dishe_img">
-          <a href="#"><img src="/img/dish1.jpg" alt="" title=""/></a>
-        </div>
-        <div class="dish_info">
-          <a href="#">
-            <h2>shish tawook</h2>
-          </a>
-          <h3>30 LE</h3>
-        </div>
-        <ul class="rating">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li class="no-star"></li>
-        </ul>
-      </article>
-
-      <article>
-        <div class="dishe_img">
-          <a href="#"><img src="/img/dish2.jpg" alt="" title=""/></a>
-        </div>
-        <div class="dish_info">
-          <a href="#">
-            <h2>Chineese food<</h2>
-          </a>
-          <h3>24 LE</h3>
-        </div>
-        <ul class="rating">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li class="no-star"></li>
-          <li class="no-star"></li>
-        </ul>
-      </article>
-
-      <article>
-        <div class="dishe_img">
-          <a href="#"><img src="/img/dish3.jpg" alt="" title=""/></a>
-        </div>
-        <div class="dish_info">
-          <a href="#">
-            <h2>Banana Dessert</h2>
-          </a>
-          <h3>60 LE</h3>
-        </div>
-        <ul class="rating">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </article>
-
-      <article>
-        <div class="dishe_img">
-          <a href="#"><img src="/img/dish4.jpg" alt="" title=""/></a>
-        </div>
-        <div class="dish_info">
-          <a href="#">
-            <h2>Vegetable salad</h2>
-          </a>
-          <h3>17 LE</h3>
-        </div>
-        <ul class="rating">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li class="no-star"></li>
-        </ul>
-      </article>
-
-      <article>
-        <div class="dishe_img">
-          <a href="#"><img src="/img/dish1.jpg" alt="" title=""/></a>
-        </div>
-        <div class="dish_info">
-          <a href="#">
-            <h2>shish tawook</h2>
-          </a>
-          <h3>30 LE</h3>
-        </div>
-        <ul class="rating">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li class="no-star"></li>
-        </ul>
-      </article>
-
-      <article>
-        <div class="dishe_img">
-          <a href="#"><img src="/img/dish2.jpg" alt="" title=""/></a>
-        </div>
-        <div class="dish_info">
-          <a href="#">
-            <h2>Chineese food</h2>
-          </a>
-          <h3>24 LE</h3>
-        </div>
-        <ul class="rating">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li class="no-star"></li>
-          <li class="no-star"></li>
-        </ul>
-      </article>
-
-      <article>
-        <div class="dishe_img">
-          <a href="#"><img src="/img/dish3.jpg" alt="" title=""/></a>
-        </div>
-        <div class="dish_info">
-          <a href="#">
-            <h2>banana dessert</h2>
-          </a>
-          <h3>60 LE</h3>
-        </div>
-        <ul class="rating">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </article>
-
-      <article>
-        <div class="dishe_img">
-          <a href="#"><img src="/img/dish4.jpg" alt="" title=""/></a>
-        </div>
-        <div class="dish_info">
-          <a href="#">
-            <h2>Vegetable salad</h2>
-          </a>
-          <h3>17 LE</h3>
-        </div>
-        <ul class="rating">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li class="no-star"></li>
-        </ul>
-      </article>
-
-    </section>
-  </div>
-</section>
-<!--  end featured_dishes  -->
-
-
-<!--  start gallery  -->
-<section class="gallery">
-  <div class="wrapper">
-    <section class="info">
-      <div class="title">
-        <h3>The Gallery</h3>
-        <span class="separator"></span>
       </div>
     </section>
+    <!--  end hero  -->
 
-    <div class="media">
-      <section>
 
-        <img src="/img/img1.jpg" alt="" title=""/>
+    <!--  start menu  -->
 
-      </section>
 
-      <section>
-        <div class="hhalf">
+    <section class="menu">
 
-          <img src="/img/img2.jpg" alt="" title=""/>
+      <div class="wrapper">
+        <div class="menu_title" id="mainmenu">
+          <h2>The Menu</h2>
+          <ul class="nav nav-tabs">
+            <% @categories.each_with_index do |cat,index| %>
+              <li class="<%= 'active' if index==0%>"><a data-toggle="tab" href=#<%=c at.id%> style="color:black"> <%=cat.name%></a></li>
+              <%end%>
 
+          </ul>
         </div>
-        <div class="hhalf">
+        <div class="tab-content">
+          <% @categories.each_with_index do |cat,index| %>
+            <div id="<%= cat.id%>" class="tab-pane fade in <%= 'active' if index==0%>">
+              <div class="mean_menu">
+                <!--  left menu row  -->
 
-          <img src="/img/img3.jpg" alt="" title=""/>
 
+                <article class="lmenu">
+                  <ul>
+                    <% @products.each_with_index do |product,index2| %>
+                      <%if product.category.id== cat.id  and index2 %2==0%>
+                        <li>
+
+                          <div class="item_info">
+
+                            <h3 class="item_name">
+                              <%=product.name %>
+                            </h3>
+
+                          </div>
+                          <h4 class="price">
+                            <%=product.price%> LE</h4>
+                          <span class="separator"></span>
+                        </li>
+                        <%end%>
+                          <%end%>
+
+
+
+                  </ul>
+                </article>
+
+                <!--  right menu row  -->
+                <article class="rmenu">
+                  <ul>
+                    <% @products.each_with_index do |product,index| %>
+                      <%if product.category.id== cat.id  and index %2 != 0%>
+                        <li>
+
+                          <div class="item_info">
+
+                            <h3 class="item_name">
+                              <%=product.name %>
+                            </h3>
+
+                          </div>
+                          <h4 class="price">
+                            <%=product.price%> LE</h4>
+                          <span class="separator"></span>
+                        </li>
+                        <%end%>
+                          <%end%>
+                  </ul>
+                </article>
+              </div>
+
+              <!--  hidden menu items  -->
+
+
+            </div>
+
+            <%end%>
         </div>
-      </section>
 
-      <section>
-        <div class="hhalf">
+      </div>
 
-          <img src="/img/img4.jpg" alt="" title=""/>
+    </section>
+    <!--  end menu  -->
+  </div>
+  </div>
 
+
+  <!--  start featured dishes  -->
+  <section class="featured_dishes">
+    <div class="wrapper">
+      <section class="info">
+        <div class="title">
+          <h3>Featured Dishes</h3>
+          <span class="separator"></span>
         </div>
-        <div class="hhalf">
-
-          <img src="/img/img5.jpg" alt="" title=""/>
-
+        <div class="slider_nav" id="slider_nav">
         </div>
+      </section>.....
+
+      <section class="dishes" id="dishes">
+
+        <article>
+          <div class="dishe_img">
+            <a href="#"><img src="/img/dish1.jpg" alt="" title=""/></a>
+          </div>
+          <div class="dish_info">
+            <a href="#">
+              <h2>Shish tawook</h2>
+            </a>
+            <h3>30 LE</h3>
+          </div>
+          <ul class="rating">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li class="no-star"></li>
+          </ul>
+        </article>
+
+        <article>
+          <div class="dishe_img">
+            <a href="#"><img src="/img/dish2.jpg" alt="" title=""/></a>
+          </div>
+          <div class="dish_info">
+            <a href="#">
+              <h2>Chineese food</h2>
+            </a>
+            <h3>24 LE</h3>
+          </div>
+          <ul class="rating">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li class="no-star"></li>
+            <li class="no-star"></li>
+          </ul>
+        </article>
+
+        <article>
+          <div class="dishe_img">
+            <a href="#"><img src="/img/dish3.jpg" alt="" title=""/></a>
+          </div>
+          <div class="dish_info">
+            <a href="#">
+              <h2>banana dessert </h2>
+            </a>
+            <h3>60 LE</h3>
+          </div>
+          <ul class="rating">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </article>
+
+        <article>
+          <div class="dishe_img">
+            <a href="#"><img src="/img/dish4.jpg" alt="" title=""/></a>
+          </div>
+          <div class="dish_info">
+            <a href="#">
+              <h2>Vegetable salad</h2>
+            </a>
+            <h3>17 LE</h3>
+          </div>
+          <ul class="rating">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li class="no-star"></li>
+          </ul>
+        </article>
+
+        <article>
+          <div class="dishe_img">
+            <a href="#"><img src="/img/dish1.jpg" alt="" title=""/></a>
+          </div>
+          <div class="dish_info">
+            <a href="#">
+              <h2>shish tawook</h2>
+            </a>
+            <h3>30 LE</h3>
+          </div>
+          <ul class="rating">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li class="no-star"></li>
+          </ul>
+        </article>
+
+        <article>
+          <div class="dishe_img">
+            <a href="#"><img src="/img/dish2.jpg" alt="" title=""/></a>
+          </div>
+          <div class="dish_info">
+            <a href="#">
+              <h2>Chineese food
+                <</h2>
+            </a>
+            <h3>24 LE</h3>
+          </div>
+          <ul class="rating">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li class="no-star"></li>
+            <li class="no-star"></li>
+          </ul>
+        </article>
+
+        <article>
+          <div class="dishe_img">
+            <a href="#"><img src="/img/dish3.jpg" alt="" title=""/></a>
+          </div>
+          <div class="dish_info">
+            <a href="#">
+              <h2>Banana Dessert</h2>
+            </a>
+            <h3>60 LE</h3>
+          </div>
+          <ul class="rating">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </article>
+
+        <article>
+          <div class="dishe_img">
+            <a href="#"><img src="/img/dish4.jpg" alt="" title=""/></a>
+          </div>
+          <div class="dish_info">
+            <a href="#">
+              <h2>Vegetable salad</h2>
+            </a>
+            <h3>17 LE</h3>
+          </div>
+          <ul class="rating">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li class="no-star"></li>
+          </ul>
+        </article>
+
+        <article>
+          <div class="dishe_img">
+            <a href="#"><img src="/img/dish1.jpg" alt="" title=""/></a>
+          </div>
+          <div class="dish_info">
+            <a href="#">
+              <h2>shish tawook</h2>
+            </a>
+            <h3>30 LE</h3>
+          </div>
+          <ul class="rating">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li class="no-star"></li>
+          </ul>
+        </article>
+
+        <article>
+          <div class="dishe_img">
+            <a href="#"><img src="/img/dish2.jpg" alt="" title=""/></a>
+          </div>
+          <div class="dish_info">
+            <a href="#">
+              <h2>Chineese food</h2>
+            </a>
+            <h3>24 LE</h3>
+          </div>
+          <ul class="rating">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li class="no-star"></li>
+            <li class="no-star"></li>
+          </ul>
+        </article>
+
+        <article>
+          <div class="dishe_img">
+            <a href="#"><img src="/img/dish3.jpg" alt="" title=""/></a>
+          </div>
+          <div class="dish_info">
+            <a href="#">
+              <h2>banana dessert</h2>
+            </a>
+            <h3>60 LE</h3>
+          </div>
+          <ul class="rating">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </article>
+
+        <article>
+          <div class="dishe_img">
+            <a href="#"><img src="/img/dish4.jpg" alt="" title=""/></a>
+          </div>
+          <div class="dish_info">
+            <a href="#">
+              <h2>Vegetable salad</h2>
+            </a>
+            <h3>17 LE</h3>
+          </div>
+          <ul class="rating">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li class="no-star"></li>
+          </ul>
+        </article>
+
       </section>
     </div>
+  </section>
+  <!--  end featured_dishes  -->
+
+
+  <!--  start gallery  -->
+  <section class="gallery">
+    <div class="wrapper">
+      <section class="info">
+        <div class="title">
+          <h3>The Gallery</h3>
+          <span class="separator"></span>
+        </div>
+      </section>
+
+      <div class="media">
+        <section>
+
+          <img src="/img/img1.jpg" alt="" title="" />
+
+        </section>
+
+        <section>
+          <div class="hhalf">
+
+            <img src="/img/img2.jpg" alt="" title="" />
+
+          </div>
+          <div class="hhalf">
+
+            <img src="/img/img3.jpg" alt="" title="" />
+
+          </div>
+        </section>
+
+        <section>
+          <div class="hhalf">
+
+            <img src="/img/img4.jpg" alt="" title="" />
+
+          </div>
+          <div class="hhalf">
+
+            <img src="/img/img5.jpg" alt="" title="" />
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+  <!--  end gallery  -->
+
   </div>
-</section>
-<!--  end gallery  -->
-
-</div>
-<!--  start footer  -->
+  <!--  start footer  -->
 
 
 
-<!--  end footer  -->
-<!--<script src='../ga.js'></script>-->
+  <!--  end footer  -->
+  <!--<script src='../ga.js'></script>-->
 
 </body>
 

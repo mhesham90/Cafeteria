@@ -12,10 +12,10 @@
                         </div>
                         <hr/>
                         <div>
-                            notes:<input type="text">
+                            notes:<input id="notes" type="text">
                             total:<label id="total" ></label>
 
-                            <input type="button" value="check out">
+                            <input type="button" onclick="checkOut()" value="check out">
                         </div>
                     </div>
                 </div>
@@ -23,9 +23,9 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <% if current_user.admin=='1'%>
-                                <select>
+                                <select id="users_list">
                                 <% @users.each do |user| %>
-                                    <option value="<% user.id %>"><%= user.first_name + " " +user.last_name  %></option>
+                                    <option value="<%= user.id %>"><%= user.first_name + " " +user.last_name  %></option>
                                 <%end%>
                                 </select>
                             <% else %>
@@ -112,7 +112,6 @@
             document.getElementById("cat-"+category.id).innerHTML="";
         });
      for (var product of productsMap.values()) {
-            console.log(product)
             var category_div = document.getElementById("cat-"+product.category_id)
             var product_div = document.createElement("div");
             var product_name = document.createTextNode(product.name);
@@ -124,6 +123,7 @@
             product_div.appendChild(product_avatar);
             product_div.appendChild(product_price);
             category_div.appendChild(product_div)
+            
         }
     }
 
@@ -225,5 +225,36 @@
             // order_products.push (products[0])
             drawOrder()
         }
+
+        function checkOut(){
+        var order = {};
+        order.notes = ""+document.getElementById("notes").value;
+        order.orderdetails = [];
+
+        var e = document.getElementById("users_list");
+        order.user_id = e.options[e.selectedIndex].value;
+        for (var product of order_products.values()){
+            order.orderdetails.push( {
+                                "product_id": product.id,
+                                "quantity": product.quantity
+                            })
+        }
+
+        order.products = productsMap;
+        $.ajax({
+            type:"POST",
+            url: "/orders.json",
+            data:{"order":order},
+            dataType:JSON,
+            context: document.body,
+            success: function (data) {
+
+
+            }
+        });
+
+        }
+
+        
 
 </script>

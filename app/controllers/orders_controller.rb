@@ -1,3 +1,5 @@
+require 'json'
+
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
@@ -41,21 +43,55 @@ class OrdersController < ApplicationController
 
   # POST /orders
   # POST /orders.json
-  def create
-    @order = Order.new(order_params)
+  skip_before_action :verify_authenticity_token
 
+  def create
+      puts "hi :: "
+      # ar = JSON.parse(params[:order])
+      @order = Order.new()
+      user = current_user
+      if user.admin == "1"
+          @order.user =User.find(params[:order]['user_id'])
+        else
+          @order.user = user
+      end 
+      @order.notes = params[:order]['notes']
+      @order.status = 1;
+      params[:order]['orderdetails'].each do |k,v|
+        puts k
+        @orderdetails = @order.orderdetails.build(:product => Product.find(v['product_id']) ,:quantity => v['quantity'])
+        @orderdetails.save
+      end
+
+      #  params[:order].each do |o|
+      #         if o.kind_of?(Array)
+      #             o.each do |p|
+      #               puts p
+      #               puts "go"
+      #             end
+      #         else
+      #           puts o
+      #           puts "else"
+      #         end
+      #    end
+
+
+    #  data = JSON.parse(order_params)
+
+    #    puts  data
       # if current_user.admin == 0 
       #   get user from request
       #  else 
       #   get user from session
-
+      
     respond_to do |format|
       if @order.save
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render :show, status: :created, location: @order }
+        format.json { render json: p, status: :created, location: @order }
       else
+        puts "errrrro"
         format.html { render :new }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+        format.json { render json: order_params, status: :created }
       end
     end
   end
@@ -92,6 +128,8 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.fetch(:order, {})
+      # params.fetch(:order, {})
+       params.permit(:order, :user_id , :notes, :orderdetails => [:order_id, :product_id, :quantity] )
+      
     end
 end
